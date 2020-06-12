@@ -10,7 +10,7 @@
   window.addEventListener('load', init)
 
   function init () {
-    id('log-in').addEventListener('click', logInClick)
+    id('login').addEventListener('click', logInClick)
     id('new-profile').addEventListener('click', newProfileClick)
   }
 
