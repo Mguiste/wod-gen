@@ -2,11 +2,11 @@
 The WOD GEN API provides a way to save profiles and what equipment the profiles have.
 
 ## Create a new profile.
-**Request Format:** /createprofile endpoint with body parameters of `profile`
+**Request Format:** `/createprofile` endpoint with body parameters of `profile`
 
-**Request Type:** POST
+**Request Type:** `POST`
 
-**Returned Data Format**: JSON
+**Returned Data Format**: `JSON`
 
 **Description:** Returns JSON including the given id to the profile and the profile name. If the profile already exists returns a JSON only containing an error field.
 - `id` (int) the id given to the profile
@@ -24,18 +24,17 @@ The WOD GEN API provides a way to save profiles and what equipment the profiles 
 ```
 
 **Error Handling:**
-- If profile name already exists on server (200 code)
+- If profile name already exists on server `200 code`
 ```json
 {
   "error": "Profile <profile> already exists"
 }
 ```
-- If missing body parameter `profile` (400 code)
-- Possible 400 (invalid request)
+- If missing body parameter `profile` `400 code`
 ```
 Error: missing body parameter "name"
 ```
-- If a database error occurs on server (500 code)
+- If a database error occurs on server `500 code`
 ```
 Error: database error on server
 ```
