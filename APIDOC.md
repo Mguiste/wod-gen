@@ -11,6 +11,7 @@ The WOD GEN API provides a way to save profiles and what equipment the profiles 
 **Description:** Returns JSON including the given id to the profile and the profile name. If the profile already exists returns a JSON only containing an error field.
 - `id` (int) the id given to the profile
 - `profile` (string) the name of the profile matching the body parameter
+- `equipment_ids` (array) ids of the equipment this profile has
 
 **Example Request:** /createuser with body parameters...
 - `profile` = Jackson
@@ -19,7 +20,8 @@ The WOD GEN API provides a way to save profiles and what equipment the profiles 
 ```json
 {
   "id": 4,
-  "profile": "Jackson"
+  "profile": "Jackson",
+  "equipment_ids": [1, 3, 4]
 }
 ```
 
@@ -32,7 +34,7 @@ The WOD GEN API provides a way to save profiles and what equipment the profiles 
 ```
 - If missing body parameter `profile` `400 code`
 ```
-Error: missing body parameter "name"
+Error: missing body parameter "profile"
 ```
 - If a database error occurs on server `500 code`
 ```
