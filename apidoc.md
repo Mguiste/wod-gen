@@ -48,7 +48,7 @@ Error: database error on server
 
 **Returned Data Format**: `JSON`
 
-**Description:** Returns JSON including the id given to the profile, the name of the profile and the list of equipment ids the profile has.
+**Description:** Returns JSON including the id given to the profile, the name of the profile and the list of equipment ids the profile has. If profile does not exist returns json containing error message.
 - `id` (int) the id given to the profile
 - `profile` (string) the name of the profile matching the query parameter
 - `equipment_ids` (array) ids of the equipment this profile has
@@ -66,6 +66,12 @@ Error: database error on server
 ```
 
 **Error Handling:**
+- If profile does not exist `200 code`
+```json
+{
+  "error": "Profile <profile> does not exist"
+}
+```
 - If missing body parameter `profile` `400 code`
 ```
 Error: missing query parameter "profile"
