@@ -18,6 +18,7 @@
   "homepage": "https://github.com/Mguiste/wod-gen#readme",
   "dependencies": {
     "express": "^4.17.1",
+    "multer": "^1.4.2",
     "sqlite": "^4.0.10",
     "sqlite3": "^4.2.0"
   },
