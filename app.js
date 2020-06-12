@@ -20,8 +20,8 @@ const WOD_GEN_DB = 'resources/wod-gen.db'
 app.get('/login', (req, res) => {
 })
 
-app.post('/createprofile', async (req, res) => {
-  const profileName = req.body.profile
+app.get('/createprofile', async (req, res) => {
+  const profileName = req.query.profile
   if (!profileName) {
     res.status(400).type('text').send('Error: missing body parameter "profileName"')
     return
@@ -40,7 +40,6 @@ app.post('/createprofile', async (req, res) => {
       return
     }
   } catch (error) {
-    console.log(error)
     res.status(500).type('text').send('Error: database error on server')
   }
 })
@@ -54,7 +53,11 @@ app.post('/createprofile', async (req, res) => {
 async function getProfile (profile) {
   const db = await getDBConnection(WOD_GEN_DB)
   const qry = 'SELECT * FROM profiles WHERE name = ?;'
-  return await db.get(qry, [profile])
+  const result = await db.get(qry, [profile])
+  if (result) {
+    result["equipment_ids"] = JSON.parse(result["equipment_ids"])
+  }
+  return result
 }
 
 /**
