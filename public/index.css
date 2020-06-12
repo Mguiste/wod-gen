@@ -1,0 +1,24 @@
+/*
+  Name: Mason Guiste
+  Date: 6/11/20
+
+  The css rules for the intro page.
+*/
+
+body {
+  height: 100vh;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: aliceblue;
+}
+
+body > div {
+  margin: 10px;
+}
+
+body > button {
+  margin: 5px;
+}
