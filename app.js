@@ -13,6 +13,9 @@ const app = express()
 app.get('/login', (req, res) => {
 })
 
+app.post('/createuser', (req, res) => {
+})
+
 /**
  * Establishes a database connection to the provided file database and returns the database object.
  * Any errors that occur during connection should be caught in the function
