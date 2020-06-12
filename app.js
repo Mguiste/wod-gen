@@ -15,11 +15,58 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 app.use(multer().none())
 
+const WOD_GEN_DB = 'resources/wod-gen.db'
+
 app.get('/login', (req, res) => {
 })
 
-app.post('/createuser', (req, res) => {
+app.post('/createprofile', async (req, res) => {
+  const profileName = req.body.profile
+  if (!profileName) {
+    res.status(400).type('text').send('Error: missing body parameter "profileName"')
+    return
+  }
+  try {
+    let profile = await getProfile(profileName)
+    if (profile) {
+      res.status(200).json({
+        error: 'Profile ' + profileName + ' already exists'
+      })
+      return
+    } else {
+      await createNewProfile(profileName)
+      profile = await getProfile(profileName)
+      res.status(200).json(profile)
+      return
+    }
+  } catch (error) {
+    console.log(error)
+    res.status(500).type('text').send('Error: database error on server')
+  }
 })
+
+/**
+ * Gets the profile from the WOD_GEN_DB file with matching name.
+ * @param {string} profile name of the profile in profiles table
+ * @returns {object} the entry in profiles with the matching profile and undefined if no matching entry found
+ * @throws {error} on any server error
+ */
+async function getProfile (profile) {
+  const db = await getDBConnection(WOD_GEN_DB)
+  const qry = 'SELECT * FROM profiles WHERE name = ?;'
+  return await db.get(qry, [profile])
+}
+
+/**
+ * Creates a new profile with name matching the profile parameter. Does not check if profile already exists.
+ * @param {string} profile the name of the profile
+ * @throws {error} on any server error
+ */
+async function createNewProfile (profile) {
+  const db = await getDBConnection(WOD_GEN_DB)
+  const qry = 'INSERT INTO profiles (name, equipment_ids) VALUES (?, ?);'
+  await db.run(qry, [profile, JSON.stringify([])])
+}
 
 /**
  * Establishes a database connection to the provided file database and returns the database object.
