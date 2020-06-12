@@ -6,9 +6,14 @@
  */
 'use strict'
 const express = require('express')
-const sqlite3 = require('sqlite3');
-const sqlite = require('sqlite');
+const sqlite3 = require('sqlite3')
+const sqlite = require('sqlite')
+const multer = require('multer')
 const app = express()
+
+app.use(express.urlencoded({ extended: true }))
+app.use(express.json())
+app.use(multer().none())
 
 app.get('/login', (req, res) => {
 })
@@ -24,12 +29,12 @@ app.post('/createuser', (req, res) => {
  * @returns {object} The database object for the connection.
  * @throws {error} on any database connection error
  */
-async function getDBConnection(file) {
+async function getDBConnection (file) {
   const db = await sqlite.open({
     filename: file,
     driver: sqlite3.Database
-  });
-  return db;
+  })
+  return db
 }
 
 app.use(express.static('public'))
