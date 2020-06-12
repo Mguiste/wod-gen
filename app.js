@@ -17,13 +17,10 @@ app.use(multer().none())
 
 const WOD_GEN_DB = 'resources/wod-gen.db'
 
-app.get('/login', (req, res) => {
-})
-
 app.post('/createprofile', async (req, res) => {
   const profileName = req.body.profile
   if (!profileName) {
-    res.status(400).type('text').send('Error: missing body parameter "profileName"')
+    res.status(400).type('text').send('Error: missing body parameter "profile"')
     return
   }
   try {
@@ -37,6 +34,28 @@ app.post('/createprofile', async (req, res) => {
       await createNewProfile(profileName)
       profile = await getProfile(profileName)
       res.status(200).json(profile)
+      return
+    }
+  } catch (error) {
+    res.status(500).type('text').send('Error: database error on server')
+  }
+})
+
+app.get('/login', async (req, res) => {
+  const profileName = req.query.profile
+  if (!profileName) {
+    res.status(400).type('text').send('Error: missing query parameter "profile"')
+    return
+  }
+  try {
+    const profile = await getProfile(profileName)
+    if (profile) {
+      res.status(200).json(profile)
+      return
+    } else {
+      res.status(200).json({
+        error: 'Profile ' + profileName + ' does not exist'
+      })
       return
     }
   } catch (error) {
