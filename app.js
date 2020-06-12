@@ -20,8 +20,8 @@ const WOD_GEN_DB = 'resources/wod-gen.db'
 app.get('/login', (req, res) => {
 })
 
-app.get('/createprofile', async (req, res) => {
-  const profileName = req.query.profile
+app.post('/createprofile', async (req, res) => {
+  const profileName = req.body.profile
   if (!profileName) {
     res.status(400).type('text').send('Error: missing body parameter "profileName"')
     return
@@ -55,7 +55,7 @@ async function getProfile (profile) {
   const qry = 'SELECT * FROM profiles WHERE name = ?;'
   const result = await db.get(qry, [profile])
   if (result) {
-    result["equipment_ids"] = JSON.parse(result["equipment_ids"])
+    result.equipment_ids = JSON.parse(result.equipment_ids)
   }
   return result
 }
