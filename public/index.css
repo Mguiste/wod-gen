@@ -21,4 +21,9 @@ body > div {
 
 body > button {
   margin: 5px;
+  font-size: large;
+}
+
+.hidden {
+  display: none;
 }
