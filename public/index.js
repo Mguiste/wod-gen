@@ -9,15 +9,6 @@
 ;(function () {
   window.addEventListener('load', init)
 
-  checkLoggedIn()
-
-  function checkLoggedIn() {
-    let id = window.sessionStorage.getItem('id')
-    if (id) {
-      window.location.replace('workout.html')
-    }
-  }
-
   function init () {
     id('login').addEventListener('click', logInClick)
     id('new-profile').addEventListener('click', newProfileClick)
@@ -38,7 +29,7 @@
         window.sessionStorage.setItem('id', response.id)
         window.sessionStorage.setItem('name', response.name)
         window.sessionStorage.setItem('equipment_ids', JSON.stringify(response.equipment_ids))
-        window.location.replace('workout.html')
+        window.location.replace('main.html')
       }
     } catch (error) {
       displayMessage('Error: server error loggin in to profile "' + profile + '"')
