@@ -47,6 +47,28 @@
 
   // -------------------- HELPER FUNCTIONS -------------------- //
   function displayMessage (msg) {
+    const htmlMsg = id('usr-msg')
+    htmlMsg.textContent = msg
+    show(htmlMsg)
+    setTimeout(() => hide(htmlMsg), 3000)
+  }
+
+  /**
+   * Removes the hidden class from the element making it visible to the user. If the element
+   * already does not have the hidden class method does nothing.
+   * @param {object} element DOM object you want the hidden class removed from
+   */
+  function show (element) {
+    element.classList.remove('hidden')
+  }
+
+  /**
+   * Adds the hidden class from the element making it invisible to the user. If the element
+   * already has the hidden class method does nothing.
+   * @param {object} element DOM object you want the hidden class added to
+   */
+  function hide (element) {
+    element.classList.add('hidden')
   }
 
   /**
