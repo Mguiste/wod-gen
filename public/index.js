@@ -16,6 +16,21 @@
 
   // -------------------- EVENT HANDLER FUNCTIONS -------------------- //
   async function logInClick () {
+    const profile = id('profile').value
+    if (!profile) {
+      displayMessage('Error: type a name for the profile')
+      return
+    }
+    try {
+      const response = await getLogin(profile)
+      if (response.error) {
+        displayMessage('Error: profile "' + profile + '" does not exist')
+      } else {
+        window.location.replace('workout.html')
+      }
+    } catch (error) {
+      displayMessage('Error: server error loggin in to profile "' + profile + '"')
+    }
   }
 
   async function newProfileClick () {
@@ -41,6 +56,12 @@
     const params = new window.FormData()
     params.append('profile', profile)
     const response = await window.fetch('createprofile', { method: 'POST', body: params })
+    checkStatus(response)
+    return await response.json()
+  }
+
+  async function getLogin (profile) {
+    const response = await window.fetch('login?profile=' + profile)
     checkStatus(response)
     return await response.json()
   }
