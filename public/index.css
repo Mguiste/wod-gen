@@ -12,18 +12,8 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: aliceblue;
 }
 
 body > div {
   margin: 10px;
-}
-
-body > button {
-  margin: 5px;
-  font-size: large;
-}
-
-.hidden {
-  display: none;
 }

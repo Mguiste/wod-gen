@@ -1,0 +1,20 @@
+/*
+  Name: Mason Guiste
+  Date: 6/13/20
+
+  The general css rules for the wod gen project.
+*/
+
+body {
+  background-color: aliceblue;
+}
+
+button {
+  margin: 5px;
+  font-size: large;
+}
+
+/* ---------- HELPER CLASSES ---------- */
+.hidden {
+  display: none;
+}
