@@ -26,6 +26,9 @@
       if (response.error) {
         displayMessage('Error: profile "' + profile + '" does not exist')
       } else {
+        window.sessionStorage.setItem('id', response.id)
+        window.sessionStorage.setItem('profile', response.profile)
+        window.sessionStorage.setItem('equipment_ids', JSON.stringify(response.equipment_ids))
         window.location.replace('workout.html')
       }
     } catch (error) {
