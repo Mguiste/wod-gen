@@ -38,9 +38,9 @@
 
   // -------------------- API REQUEST FUNCTIONS -------------------- //
   async function postCreateProfile (profile) {
-    const params = new FormData()
+    const params = new window.FormData()
     params.append('profile', profile)
-    const response = await fetch('createprofile', { method: 'POST', body: params })
+    const response = await window.fetch('createprofile', { method: 'POST', body: params })
     checkStatus(response)
     return await response.json()
   }
