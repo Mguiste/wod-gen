@@ -11,8 +11,8 @@
 
   checkLoggedIn()
 
-  function checkLoggedIn() {
-    let id = window.sessionStorage.getItem('id')
+  function checkLoggedIn () {
+    const id = window.sessionStorage.getItem('id')
     if (!id) {
       window.location.replace('/')
     }
@@ -20,6 +20,15 @@
 
   function init () {
     id('profile').textContent = window.sessionStorage.getItem('name')
+    id('log-out').addEventListener('click', logOutClick)
+  }
+
+  // -------------------- EVENT HANDLER FUNCTIONS -------------------- //
+  function logOutClick () {
+    window.sessionStorage.removeItem('id')
+    window.sessionStorage.removeItem('name')
+    window.sessionStorage.removeItem('equipment_ids')
+    window.location.replace('/')
   }
 
   /**
