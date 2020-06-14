@@ -1,0 +1,11 @@
+/*
+  Name: Mason Guiste
+  Date: 6/13/20
+
+  The css rules for the post log in page.
+*/
+
+header {
+  display: flex;
+  justify-content: space-around;
+}
