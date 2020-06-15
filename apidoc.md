@@ -114,7 +114,7 @@ Error: database error on server
 
 **Returned Data Format**: `JSON`
 
-**Description:** Returns JSON including the `profile` and `equipment` selected
+**Description:** Toggles whether the equipment is selected or not on the profile. If not currently selected changes to selected and if already selected changes to not selected. Returns JSON including the `profile` and `equipment` selected.
 - `profile` (string) the name of the profile matching the body parameter
 - `equipment` (string) the name of the equipment selected matching the body parameter
 
