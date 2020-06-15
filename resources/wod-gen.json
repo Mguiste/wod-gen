@@ -1,0 +1,30 @@
+{
+  "equipment": [
+    "Barbells",
+    "Dumbbells",
+    "Row",
+    "Bike",
+    "Skierg",
+    "Wall Balls",
+    "Kettle Bell",
+    "Pull Up Bar",
+    "Sled"
+  ],
+  "exercises": [
+    {
+      "name": "Run"
+    },
+    {
+      "name": "Back Squat",
+      "requires": "Barbells"
+    },
+    {
+      "name": "Front Squat",
+      "requires": "Barbells"
+    },
+    {
+      "name": "Dumbell Bench Press",
+      "requires": "Dumbbells"
+    }
+  ]
+}
