@@ -80,3 +80,29 @@ Error: missing query parameter "profile"
 ```
 Error: database error on server
 ```
+## Get name of all equipment.
+**Request Format:** `/allequipment`
+
+**Request Type:** `GET`
+
+**Returned Data Format**: `JSON`
+
+**Description:** Returns JSON of the names of all the equipment on server.
+
+**Example Request:** /allequipment
+
+**Example Response:**
+```json
+[
+  "Barbells",
+  "Dumbbells",
+  "Sled",
+  // ... for all equipment on server
+]
+```
+
+**Error Handling:**
+- If a database error occurs on server `500 code`
+```
+Error: database error on server
+```
