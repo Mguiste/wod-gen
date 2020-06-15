@@ -25,6 +25,8 @@
     const equipment = await getAllEquipment()
     equipment.forEach(e => {
       const div = gen('div')
+      div.classList.add('selectable')
+      div.addEventListener('click', equipmentClick)
       const p = gen('p')
       p.textContent = e
       div.appendChild(p)
@@ -38,6 +40,10 @@
     window.sessionStorage.removeItem('name')
     window.sessionStorage.removeItem('equipment_ids')
     window.location.replace('/')
+  }
+
+  async function equipmentClick (event) {
+    const equipment = event.currentTarget.children[0].textContent
   }
 
   // -------------------- API REQUEST FUNCTIONS -------------------- //
