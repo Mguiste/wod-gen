@@ -9,3 +9,22 @@ header {
   display: flex;
   justify-content: space-around;
 }
+
+#equipment {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+#equipment > div {
+  border: 1px black solid;
+  margin: 3px;
+  width: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#equipment > div > p {
+  text-align: center;
+}
