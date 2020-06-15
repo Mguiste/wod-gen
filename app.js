@@ -8,6 +8,7 @@
 const express = require('express')
 const sqlite3 = require('sqlite3')
 const sqlite = require('sqlite')
+const fs = require('fs').promises
 const multer = require('multer')
 const app = express()
 
@@ -16,6 +17,7 @@ app.use(express.json())
 app.use(multer().none())
 
 const WOD_GEN_DB = 'resources/wod-gen.db'
+const WOD_GEN_EQUIPMENT = 'resources/wod-gen.json'
 
 app.post('/createprofile', async (req, res) => {
   const profileName = req.body.profile
@@ -58,6 +60,15 @@ app.get('/login', async (req, res) => {
       })
       return
     }
+  } catch (error) {
+    res.status(500).type('text').send('Error: database error on server')
+  }
+})
+
+app.get('/allequipment', async (req, res) => {
+  try {
+    const contents = JSON.parse(await fs.readFile(WOD_GEN_EQUIPMENT))
+    res.status(200).json(contents.equipment)
   } catch (error) {
     res.status(500).type('text').send('Error: database error on server')
   }
