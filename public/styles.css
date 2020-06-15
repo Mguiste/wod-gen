@@ -18,3 +18,7 @@ button {
 .hidden {
   display: none;
 }
+
+.selectable {
+  cursor: pointer;
+}
