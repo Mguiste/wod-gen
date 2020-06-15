@@ -106,3 +106,42 @@ Error: database error on server
 ```
 Error: database error on server
 ```
+
+## Select an equipment for a profile.
+**Request Format:** `/selectequipment` endpoint with body parameters of `profile` and `equipment`
+
+**Request Type:** `POST`
+
+**Returned Data Format**: `JSON`
+
+**Description:** Returns JSON including the `profile` and `equipment` selected
+- `profile` (string) the name of the profile matching the body parameter
+- `equipment` (string) the name of the equipment selected matching the body parameter
+
+**Example Request:** /selectequipment with body parameters...
+- `profile` = Jackson
+- `equipment` = Sled
+
+**Example Response:**
+```json
+{
+  "profile": "Jackson",
+  "equipment": "Sled"
+}
+```
+
+**Error Handling:**
+- If profile name does not exist on server `200 code`
+```json
+{
+  "error": "Profile <profile> does not exist"
+}
+```
+- If missing body parameter `profile` and/or `equipment` `400 code`
+```
+Error: missing body parameter "profile" and/or "equipment"
+```
+- If a database error occurs on server `500 code`
+```
+Error: database error on server
+```
