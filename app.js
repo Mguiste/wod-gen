@@ -74,6 +74,33 @@ app.get('/allequipment', async (req, res) => {
   }
 })
 
+app.post('/selectequipment', async (req, res) => {
+  const profileName = req.body.profile
+  const equipment = req.body.equipment
+  if (!profileName || !equipment) {
+    res.status(400).type('text').send('Error: missing body parameter "profile" and/or "equipment"')
+    return
+  }
+  try {
+    const profile = await getProfile(profileName)
+    if (!profile) {
+      res.status(200).json({
+        error: 'Profile ' + profileName + ' does not exist'
+      })
+      return
+    }
+    const contents = JSON.parse(await fs.readFile(WOD_GEN_EQUIPMENT))
+    const index = contents.equipment.indexOf(equipment)
+    await selectEquipment(profileName, index)
+    res.status(200).json({
+      profile: profileName,
+      equipment: equipment
+    })
+  } catch (error) {
+    res.status(500).type('text').send('Error: database error on server')
+  }
+})
+
 /**
  * Gets the profile from the WOD_GEN_DB file with matching name.
  * @param {string} profile name of the profile in profiles table
@@ -99,6 +126,19 @@ async function createNewProfile (profile) {
   const db = await getDBConnection(WOD_GEN_DB)
   const qry = 'INSERT INTO profiles (name, equipment_ids) VALUES (?, ?);'
   await db.run(qry, [profile, JSON.stringify([])])
+}
+
+async function selectEquipment (profileName, id) {
+  const profile = await getProfile(profileName)
+  const equipmentIds = profile.equipment_ids
+  if (equipmentIds.indexOf(id) === -1) {
+    equipmentIds.push(id)
+  } else {
+    equipmentIds.splice(equipmentIds.indexOf(id), 1)
+  }
+  const db = await getDBConnection(WOD_GEN_DB)
+  const qry = 'UPDATE profiles SET equipment_ids = ? WHERE id = ?;'
+  await db.run(qry, [JSON.stringify(equipmentIds), profile.id])
 }
 
 /**
