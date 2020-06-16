@@ -67,8 +67,8 @@ app.get('/getprofile', async (req, res) => {
 
 app.get('/allequipment', async (req, res) => {
   try {
-    const contents = JSON.parse(await fs.readFile(WOD_GEN_EQUIPMENT))
-    res.status(200).json(contents.equipment)
+    const equipment = await getAllEquipment()
+    res.status(200).json(equipment)
   } catch (error) {
     res.status(500).type('text').send('Error: database error on server')
   }
@@ -139,6 +139,12 @@ async function selectEquipment (profileName, id) {
   const db = await getDBConnection(WOD_GEN_DB)
   const qry = 'UPDATE profiles SET equipment_ids = ? WHERE id = ?;'
   await db.run(qry, [JSON.stringify(equipmentIds), profile.id])
+}
+
+async function getAllEquipment () {
+  const db = await getDBConnection(WOD_GEN_DB)
+  const qry = 'SELECT * FROM equipment;'
+  return await db.all(qry)
 }
 
 /**

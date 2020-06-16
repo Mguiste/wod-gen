@@ -1,16 +1,4 @@
-{
-  "equipment": [
-    "Barbells",
-    "Dumbbells",
-    "Row",
-    "Bike",
-    "Skierg",
-    "Wall Balls",
-    "Kettle Bell",
-    "Pull Up Bar",
-    "Sled"
-  ],
-  "exercises": [
+[
     {
       "name": "Run"
     },
@@ -27,4 +15,3 @@
       "requires": "Dumbbells"
     }
   ]
-}
