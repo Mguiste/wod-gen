@@ -72,9 +72,9 @@ app.get('/allequipment', async (req, res) => {
   }
 })
 
-app.get('/selectequipment', async (req, res) => {
-  const profileName = req.query.profile
-  const equipmentName = req.query.equipment
+app.post('/selectequipment', async (req, res) => {
+  const profileName = req.body.profile
+  const equipmentName = req.body.equipment
   if (!profileName || !equipmentName) {
     res.status(400).type('text').send('Error: missing body parameter "profile" and/or "equipment"')
     return
