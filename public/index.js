@@ -27,9 +27,7 @@ import { postCreateProfile, getProfile } from './modules/request.mjs'
       if (response.error) {
         displayMessage('Error: profile "' + profile + '" does not exist')
       } else {
-        window.sessionStorage.setItem('id', response.id)
-        window.sessionStorage.setItem('name', response.name)
-        window.sessionStorage.setItem('equipment_ids', JSON.stringify(response.equipment_ids))
+        window.sessionStorage.setItem('profile', response.name)
         window.location.replace('main.html')
       }
     } catch (error) {
