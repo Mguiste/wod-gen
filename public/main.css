@@ -28,3 +28,7 @@ header {
 #equipment > div > p {
   text-align: center;
 }
+
+.selected {
+  background-color: greenyellow;
+}
