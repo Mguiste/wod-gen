@@ -134,14 +134,8 @@ Error: database error on server
 **Example Response:**
 ```json
 {
-  "profile": {
-    "id": 1,
-    "name": "Jackson"
-  },
-  "equipment": {
-    "id": 2,
-    "name": "Dumbbells"
-  }
+  "profile": "Jackson",
+  "equipment": "Dumbbells"
 }
 ```
 
