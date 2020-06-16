@@ -8,7 +8,6 @@
 const express = require('express')
 const sqlite3 = require('sqlite3')
 const sqlite = require('sqlite')
-const fs = require('fs').promises
 const multer = require('multer')
 const app = express()
 
@@ -17,7 +16,6 @@ app.use(express.json())
 app.use(multer().none())
 
 const WOD_GEN_DB = 'resources/wod-gen.db'
-const WOD_GEN_EQUIPMENT = 'resources/wod-gen.json'
 
 app.post('/createprofile', async (req, res) => {
   const profileName = req.body.profile
@@ -74,27 +72,32 @@ app.get('/allequipment', async (req, res) => {
   }
 })
 
-app.post('/selectequipment', async (req, res) => {
-  const profileName = req.body.profile
-  const equipment = req.body.equipment
-  if (!profileName || !equipment) {
+app.get('/selectequipment', async (req, res) => {
+  const profileName = req.query.profile
+  const equipmentName = req.query.equipment
+  if (!profileName || !equipmentName) {
     res.status(400).type('text').send('Error: missing body parameter "profile" and/or "equipment"')
     return
   }
   try {
-    const profile = await getProfile(profileName)
+    let profile = await getProfile(profileName)
     if (!profile) {
       res.status(200).json({
         error: 'Profile ' + profileName + ' does not exist'
       })
       return
     }
-    const contents = JSON.parse(await fs.readFile(WOD_GEN_EQUIPMENT))
-    const index = contents.equipment.indexOf(equipment)
-    await selectEquipment(profileName, index)
+    const equipment = await getEquipment(equipmentName)
+    if (!equipment) {
+      res.status(200).json({
+        error: 'Equipment ' + equipmentName + ' does not exist'
+      })
+    }
+    await selectEquipment(profileName, equipment.id)
+    profile = await getProfile(profileName)
     res.status(200).json({
       profile: profileName,
-      equipment: equipment
+      equipment: equipmentName
     })
   } catch (error) {
     res.status(500).type('text').send('Error: database error on server')
@@ -145,6 +148,12 @@ async function getAllEquipment () {
   const db = await getDBConnection(WOD_GEN_DB)
   const qry = 'SELECT * FROM equipment;'
   return await db.all(qry)
+}
+
+async function getEquipment (equipment) {
+  const db = await getDBConnection(WOD_GEN_DB)
+  const qry = 'SELECT * FROM equipment WHERE name = ?;'
+  return await db.get(qry, [equipment])
 }
 
 /**
