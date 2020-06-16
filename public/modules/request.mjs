@@ -8,8 +8,8 @@ async function postCreateProfile (profile) {
   return await response.json()
 }
 
-async function getLogin (profile) {
-  const response = await window.fetch('login?profile=' + profile)
+async function getProfile (profile) {
+  const response = await window.fetch('getProfile?profile=' + profile)
   checkStatus(response)
   return await response.json()
 }
@@ -20,4 +20,4 @@ async function getAllEquipment () {
   return response.json()
 }
 
-export { postCreateProfile, getLogin, getAllEquipment }
+export { postCreateProfile, getProfile, getAllEquipment }

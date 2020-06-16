@@ -6,7 +6,7 @@
  */
 'use strict'
 import { id, show, hide } from './modules/helper.mjs'
-import { postCreateProfile, getLogin } from './modules/request.mjs'
+import { postCreateProfile, getProfile } from './modules/request.mjs'
 ;(function () {
   window.addEventListener('load', init)
 
@@ -23,7 +23,7 @@ import { postCreateProfile, getLogin } from './modules/request.mjs'
       return
     }
     try {
-      const response = await getLogin(profile)
+      const response = await getProfile(profile)
       if (response.error) {
         displayMessage('Error: profile "' + profile + '" does not exist')
       } else {
