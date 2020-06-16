@@ -29,7 +29,8 @@ import { getAllEquipment } from './modules/request.mjs'
       div.classList.add('selectable')
       div.addEventListener('click', equipmentClick)
       const p = gen('p')
-      p.textContent = e
+      p.textContent = e.name
+      p.id = e.id
       div.appendChild(p)
       htmlEquipment.appendChild(div)
     })
