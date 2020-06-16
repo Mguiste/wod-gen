@@ -5,7 +5,8 @@
  * The frontend JavaScript file for the main wod gens page after logging in.
  */
 'use strict'
-import { id, gen, checkStatus } from './modules/helper.mjs'
+import { id, gen } from './modules/helper.mjs'
+import { getAllEquipment } from './modules/request.mjs'
 ;(function () {
   window.addEventListener('load', init)
 
@@ -44,12 +45,5 @@ import { id, gen, checkStatus } from './modules/helper.mjs'
 
   async function equipmentClick (event) {
     const equipment = event.currentTarget.children[0].textContent
-  }
-
-  // -------------------- API REQUEST FUNCTIONS -------------------- //
-  async function getAllEquipment () {
-    const response = await window.fetch('allequipment')
-    checkStatus(response)
-    return response.json()
   }
 })()

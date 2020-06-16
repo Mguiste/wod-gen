@@ -5,7 +5,8 @@
  * The frontend JavaScript file for wod gens intro page.
  */
 'use strict'
-import { id, show, hide, checkStatus } from './modules/helper.mjs'
+import { id, show, hide } from './modules/helper.mjs'
+import { postCreateProfile, getLogin } from './modules/request.mjs'
 ;(function () {
   window.addEventListener('load', init)
 
@@ -52,21 +53,6 @@ import { id, show, hide, checkStatus } from './modules/helper.mjs'
     } catch (error) {
       displayMessage('Error: server error creating profile "' + profile + '"')
     }
-  }
-
-  // -------------------- API REQUEST FUNCTIONS -------------------- //
-  async function postCreateProfile (profile) {
-    const params = new window.FormData()
-    params.append('profile', profile)
-    const response = await window.fetch('createprofile', { method: 'POST', body: params })
-    checkStatus(response)
-    return await response.json()
-  }
-
-  async function getLogin (profile) {
-    const response = await window.fetch('login?profile=' + profile)
-    checkStatus(response)
-    return await response.json()
   }
 
   // -------------------- HELPER FUNCTIONS -------------------- //
