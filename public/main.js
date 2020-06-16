@@ -22,6 +22,7 @@ import { getAllEquipment, getProfile } from './modules/request.mjs'
   async function init () {
     id('profile').textContent = window.sessionStorage.getItem('name')
     id('log-out').addEventListener('click', logOutClick)
+    id('profile').textContent = window.sessionStorage.getItem('profile')
     initializeEquipment()
   }
 
