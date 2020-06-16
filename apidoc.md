@@ -111,33 +111,51 @@ Error: database error on server
 ```
 
 ## Select an equipment for a profile.
-**Request Format:** `/selectequipment` endpoint with body parameters of `profile` and `equipment`
+**Request Format:** `/selectequipment` endpoint with body parameters of...
+- `profile` (string) name of the profile
+- `equipment` (string) name of the equipment to select
 
 **Request Type:** `POST`
 
 **Returned Data Format**: `JSON`
 
-**Description:** Toggles whether the equipment is selected or not on the profile. If not currently selected changes to selected and if already selected changes to not selected. Returns JSON including the `profile` and `equipment` selected.
-- `profile` (string) the name of the profile matching the body parameter
-- `equipment` (string) the name of the equipment selected matching the body parameter
+**Description:** Toggles whether the equipment is selected or not on the profile. If not currently selected changes to selected and if already selected changes to not selected. Returns JSON including information about the profile and equipment selected
+- `profile`
+  - `id` (int) unique id of the profile
+  - `name` (string) the name of the profile
+- `equipment`
+  - `id` (int) unique id of the equipment
+  - `name` (string) the name of the equipment
 
 **Example Request:** /selectequipment with body parameters...
 - `profile` = Jackson
-- `equipment` = Sled
+- `equipment` = Dumbbells
 
 **Example Response:**
 ```json
 {
-  "profile": "Jackson",
-  "equipment": "Sled"
+  "profile": {
+    "id": 1,
+    "name": "Jackson"
+  },
+  "equipment": {
+    "id": 2,
+    "name": "Dumbbells"
+  }
 }
 ```
 
 **Error Handling:**
-- If profile name does not exist on server `200 code`
+- If profile does not exist on server `200 code`
 ```json
 {
   "error": "Profile <profile> does not exist"
+}
+```
+- If equipment does not exist on server `200 code`
+```json
+{
+  "error": "Equipment <equipment> does not exist"
 }
 ```
 - If missing body parameter `profile` and/or `equipment` `400 code`
