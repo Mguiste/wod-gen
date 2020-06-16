@@ -41,8 +41,8 @@ Error: missing body parameter "profile"
 Error: database error on server
 ```
 
-## Login to a profile.
-**Request Format:** `/login` endpoint with query parameter of `profile`
+## Get a profile.
+**Request Format:** `/getprofile` endpoint with query parameter of `profile`
 
 **Request Type:** `GET`
 
@@ -53,7 +53,7 @@ Error: database error on server
 - `profile` (string) the name of the profile matching the query parameter
 - `equipment_ids` (array) ids of the equipment this profile has
 
-**Example Request:** /login with query parameters...
+**Example Request:** /getprofile with query parameters...
 - `profile` = Jackson
 
 **Example Response:**

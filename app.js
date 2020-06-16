@@ -43,7 +43,7 @@ app.post('/createprofile', async (req, res) => {
   }
 })
 
-app.get('/login', async (req, res) => {
+app.get('/getprofile', async (req, res) => {
   const profileName = req.query.profile
   if (!profileName) {
     res.status(400).type('text').send('Error: missing query parameter "profile"')
