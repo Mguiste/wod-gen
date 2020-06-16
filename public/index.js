@@ -55,7 +55,6 @@ import { postCreateProfile, getLogin } from './modules/request.mjs'
     }
   }
 
-  // -------------------- HELPER FUNCTIONS -------------------- //
   function displayMessage (msg) {
     const htmlMsg = id('usr-msg')
     htmlMsg.textContent = msg
