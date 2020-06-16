@@ -5,16 +5,16 @@
  * The frontend JavaScript file for the main wod gens page after logging in.
  */
 'use strict'
-import { id, gen } from './modules/helper.mjs'
-import { getAllEquipment } from './modules/request.mjs'
+import { id, gen, show, hide } from './modules/helper.mjs'
+import { getAllEquipment, getProfile } from './modules/request.mjs'
 ;(function () {
   window.addEventListener('load', init)
 
   checkLoggedIn()
 
   function checkLoggedIn () {
-    const id = window.sessionStorage.getItem('id')
-    if (!id) {
+    const profile = window.sessionStorage.getItem('profile')
+    if (!profile) {
       window.location.replace('/')
     }
   }
@@ -22,25 +22,48 @@ import { getAllEquipment } from './modules/request.mjs'
   async function init () {
     id('profile').textContent = window.sessionStorage.getItem('name')
     id('log-out').addEventListener('click', logOutClick)
-    const htmlEquipment = id('equipment')
-    const equipment = await getAllEquipment()
-    equipment.forEach(e => {
-      const div = gen('div')
-      div.classList.add('selectable')
-      div.addEventListener('click', equipmentClick)
-      const p = gen('p')
-      p.textContent = e.name
-      p.id = e.id
-      div.appendChild(p)
-      htmlEquipment.appendChild(div)
-    })
+    initializeEquipment()
+  }
+
+  async function initializeEquipment () {
+    const htmlEquipmentContainer = id('equipment')
+    try {
+      const equipment = await getAllEquipment()
+      const profile = await getProfile(window.sessionStorage.getItem('profile'))
+      equipment.forEach(e => {
+        const htmlEquipment = createEquipment(e.id, e.name, profile.equipment_ids.indexOf(e.id) !== -1)
+        htmlEquipmentContainer.appendChild(htmlEquipment)
+      })
+    } catch (error) {
+      console.log(error)
+      displayMessage('Error: failed to load equipment')
+    }
+  }
+
+  function createEquipment (id, name, selected) {
+    const div = gen('div')
+    div.classList.add('selectable')
+    if (selected) {
+      div.classList.add('selected')
+    }
+    div.addEventListener('click', equipmentClick)
+    const p = gen('p')
+    p.textContent = name
+    p.id = id
+    div.appendChild(p)
+    return div
+  }
+
+  function displayMessage (msg) {
+    const htmlMsg = id('usr-msg')
+    htmlMsg.textContent = msg
+    show(htmlMsg)
+    setTimeout(() => hide(htmlMsg), 3000)
   }
 
   // -------------------- EVENT HANDLER FUNCTIONS -------------------- //
   function logOutClick () {
-    window.sessionStorage.removeItem('id')
-    window.sessionStorage.removeItem('name')
-    window.sessionStorage.removeItem('equipment_ids')
+    window.sessionStorage.removeItem('profile')
     window.location.replace('/')
   }
 
