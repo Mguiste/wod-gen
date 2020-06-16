@@ -15,6 +15,13 @@ import { postCreateProfile, getProfile } from './modules/request.mjs'
     id('new-profile').addEventListener('click', newProfileClick)
   }
 
+  function displayMessage (msg) {
+    const htmlMsg = id('usr-msg')
+    htmlMsg.textContent = msg
+    show(htmlMsg)
+    setTimeout(() => hide(htmlMsg), 3000)
+  }
+
   // -------------------- EVENT HANDLER FUNCTIONS -------------------- //
   async function logInClick () {
     const profile = id('profile').value
@@ -51,12 +58,5 @@ import { postCreateProfile, getProfile } from './modules/request.mjs'
     } catch (error) {
       displayMessage('Error: server error creating profile "' + profile + '"')
     }
-  }
-
-  function displayMessage (msg) {
-    const htmlMsg = id('usr-msg')
-    htmlMsg.textContent = msg
-    show(htmlMsg)
-    setTimeout(() => hide(htmlMsg), 3000)
   }
 })()
