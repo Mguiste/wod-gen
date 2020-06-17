@@ -6,7 +6,7 @@
  */
 'use strict'
 import { id, gen, show, hide } from './modules/helper.mjs'
-import { getAllEquipment, getProfile } from './modules/request.mjs'
+import { getAllEquipment, getProfile, postSelectEquipment } from './modules/request.mjs'
 ;(function () {
   window.addEventListener('load', init)
 
@@ -70,5 +70,16 @@ import { getAllEquipment, getProfile } from './modules/request.mjs'
 
   async function equipmentClick (event) {
     const equipment = event.currentTarget.children[0].textContent
+    try {
+      const htmlEquipment = event.currentTarget
+      const response = await postSelectEquipment(window.sessionStorage.getItem('profile'), equipment)
+      if (response.error) {
+        displayMessage('Error: profile or equipment does not exist')
+      } else {
+        htmlEquipment.classList.toggle('selected')
+      }
+    } catch (error) {
+      displayMessage('Error: failed to select equipment "' + equipment + '"')
+    }
   }
 })()
