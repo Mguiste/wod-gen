@@ -20,4 +20,13 @@ async function getAllEquipment () {
   return response.json()
 }
 
-export { postCreateProfile, getProfile, getAllEquipment }
+async function postSelectEquipment (profile, equipment) {
+  const params = new window.FormData()
+  params.append('profile', profile)
+  params.append('equipment', equipment)
+  const response = await window.fetch('selectequipment', { method: 'POST', body: params })
+  checkStatus(response)
+  return await response.json()
+}
+
+export { postCreateProfile, getProfile, getAllEquipment, postSelectEquipment }
