@@ -7,11 +7,54 @@
 
 body {
   background-color: aliceblue;
+  margin: 0;
 }
 
 button {
   margin: 5px;
   font-size: large;
+}
+
+/* ---------- MESSAGE STYLING ---------- */
+/* sets absolute position for message container */
+div.message {
+  position: absolute;
+  width: 100vw;
+  color: white;
+}
+
+div.message > div {
+  margin: 3px;
+  border: 2px solid black;
+  border-radius: 10px;
+  padding: 7px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* remove pre-existing margins off text/button elements */
+div.message > div > * {
+  margin: 0;
+}
+
+div.message > div > p {
+  font-size: large;
+}
+
+/* button to remove message no border */
+div.message > div > button {
+  border-width: 0;
+  background: none;
+}
+
+/* backgound colors for success/error message types */
+div.success {
+  background-color: green;
+}
+
+div.error {
+  background-color: red;
 }
 
 /* ---------- HELPER CLASSES ---------- */
