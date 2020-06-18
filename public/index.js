@@ -5,7 +5,7 @@
  * The frontend JavaScript file for wod gens intro page.
  */
 'use strict'
-import { id, show, hide } from './modules/helper.mjs'
+import { id, showMessage } from './modules/helper.mjs'
 import { postCreateProfile, getProfile } from './modules/request.mjs'
 ;(function () {
   window.addEventListener('load', init)
@@ -15,48 +15,41 @@ import { postCreateProfile, getProfile } from './modules/request.mjs'
     id('new-profile').addEventListener('click', newProfileClick)
   }
 
-  function displayMessage (msg) {
-    const htmlMsg = id('usr-msg')
-    htmlMsg.textContent = msg
-    show(htmlMsg)
-    setTimeout(() => hide(htmlMsg), 3000)
-  }
-
   // -------------------- EVENT HANDLER FUNCTIONS -------------------- //
   async function logInClick () {
     const profile = id('profile').value
     if (!profile) {
-      displayMessage('Error: type a name for the profile')
+      showMessage('type a name for the profile', false)
       return
     }
     try {
       const response = await getProfile(profile)
       if (response.error) {
-        displayMessage('Error: profile "' + profile + '" does not exist')
+        showMessage('profile "' + profile + '" does not exist', false)
       } else {
         window.sessionStorage.setItem('profile', response.name)
         window.location.replace('main.html')
       }
     } catch (error) {
-      displayMessage('Error: server error loggin in to profile "' + profile + '"')
+      showMessage('server error logging in to profile "' + profile + '"', false)
     }
   }
 
   async function newProfileClick () {
     const profile = id('profile').value
     if (!profile) {
-      displayMessage('Error: type a name for the profile')
+      showMessage('type a name for the profile', false)
       return
     }
     try {
       const response = await postCreateProfile(profile)
       if (response.error) {
-        displayMessage('Profile "' + profile + '" already exists')
+        showMessage('profile "' + profile + '" already exists', false)
       } else {
-        displayMessage('Profile "' + profile + '" created!')
+        showMessage('profile "' + profile + '" created!', true)
       }
     } catch (error) {
-      displayMessage('Error: server error creating profile "' + profile + '"')
+      showMessage('server error creating profile "' + profile + '"', false)
     }
   }
 })()
