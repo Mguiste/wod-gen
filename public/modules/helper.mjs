@@ -8,6 +8,15 @@ function id (idName) {
 }
 
 /**
+ * Returns the first element that matches the given CSS selector.
+ * @param {string} selector - CSS query selector string.
+ * @returns {object} first element matching the selector in the DOM tree (null if none)
+ */
+function qs (selector) {
+  return document.querySelector(selector)
+}
+
+/**
  * Removes the hidden class from the element making it visible to the user. If the element
  * already does not have the hidden class method does nothing.
  * @param {object} element DOM object you want the hidden class removed from
@@ -49,4 +58,35 @@ function checkStatus (response) {
   }
 }
 
-export { id, show, hide, gen, checkStatus }
+function showMessage (msg, success) {
+  // remove only message if one exists
+  const oldMessage = qs('div.message')
+  if (oldMessage) {
+    oldMessage.parentNode.removeChild(oldMessage)
+  }
+
+  // create new message
+  const container = gen('div')
+  container.classList.add('message')
+  const messageContainer = gen('div')
+  messageContainer.classList.add(success ? 'success' : 'error')
+  const message = gen('p')
+  message.textContent = success ? 'SUCCESS: ' + msg : 'ERROR: ' + msg
+  const button = gen('button')
+  button.textContent = 'X'
+  button.addEventListener('click', messageCloseButtonClick)
+  messageContainer.appendChild(message)
+  messageContainer.appendChild(button)
+  container.appendChild(messageContainer)
+
+  // add message to DOM
+  const htmlBody = qs('body')
+  htmlBody.insertBefore(container, htmlBody.children[0])
+}
+
+function messageCloseButtonClick (event) {
+  const container = event.currentTarget.parentNode.parentNode
+  container.parentNode.removeChild(container)
+}
+
+export { id, show, hide, gen, checkStatus, showMessage }
