@@ -5,7 +5,7 @@
   The css rules for the intro page.
 */
 
-body {
+main {
   height: 100vh;
   margin: 0;
   display: flex;
@@ -14,6 +14,6 @@ body {
   align-items: center;
 }
 
-body > div {
+main > div {
   margin: 10px;
 }
