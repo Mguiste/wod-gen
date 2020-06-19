@@ -117,6 +117,7 @@ async function getProfile (profile) {
   if (result) {
     result.equipment_ids = JSON.parse(result.equipment_ids)
   }
+  db.close()
   return result
 }
 
@@ -129,6 +130,7 @@ async function createNewProfile (profile) {
   const db = await getDBConnection(WOD_GEN_DB)
   const qry = 'INSERT INTO profiles (name, equipment_ids) VALUES (?, ?);'
   await db.run(qry, [profile, JSON.stringify([])])
+  db.close()
 }
 
 async function selectEquipment (profileName, id) {
@@ -142,18 +144,23 @@ async function selectEquipment (profileName, id) {
   const db = await getDBConnection(WOD_GEN_DB)
   const qry = 'UPDATE profiles SET equipment_ids = ? WHERE id = ?;'
   await db.run(qry, [JSON.stringify(equipmentIds), profile.id])
+  db.close()
 }
 
 async function getAllEquipment () {
   const db = await getDBConnection(WOD_GEN_DB)
   const qry = 'SELECT * FROM equipment;'
-  return await db.all(qry)
+  const result = await db.all(qry)
+  db.close()
+  return result
 }
 
 async function getEquipment (equipment) {
   const db = await getDBConnection(WOD_GEN_DB)
   const qry = 'SELECT * FROM equipment WHERE name = ?;'
-  return await db.get(qry, [equipment])
+  const result = await db.get(qry, [equipment])
+  db.close()
+  return result
 }
 
 /**
