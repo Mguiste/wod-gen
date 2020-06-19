@@ -34,7 +34,7 @@ describe('Main page tests', () => {
       cy.get('#equipment').children().should('have.class', 'selectable')
     })
     it('selected equipment for profile shown on load', () => {
-      cy.request('POST', '/selectequipment', { profile: 'jackson', equipment: 'Barbells' })
+      cy.request('POST', '/selectequipment', { profile: 'jackson', equipment: 'barbells' })
       cy.visit('/main.html')
       cy.get('#equipment').children().then(children => children[0]).should('have.class', 'selected')
     })
