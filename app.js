@@ -19,10 +19,8 @@ app.use(multer().none())
 const RESOURCE_FOLDER = 'resources'
 const WOD_GEN_DB = RESOURCE_FOLDER + '/wod-gen.db'
 const MOVEMENTS_FILE = RESOURCE_FOLDER + '/movements.json'
-let MOVEMENTS
-fs.readFile(MOVEMENTS_FILE)
+const MOVEMENTS = fs.readFile(MOVEMENTS_FILE)
   .then(JSON.parse)
-  .then(data => MOVEMENTS = data)
   .catch(() => console.error('broken'))
 
 app.post('/createprofile', async (req, res) => {
@@ -39,7 +37,7 @@ app.post('/createprofile', async (req, res) => {
       })
       return
     } else {
-      await createNewProfile(profileName)
+      await insertNewProfile(profileName)
       profile = await getProfile(profileName)
       res.status(200).json(profile)
       return
@@ -101,7 +99,7 @@ app.post('/selectequipment', async (req, res) => {
         error: 'Equipment ' + equipmentName + ' does not exist'
       })
     }
-    await selectEquipment(profileName, equipment.id)
+    await updateSelectEquipment(profileName, equipment.id)
     profile = await getProfile(profileName)
     res.status(200).json({
       profile: profileName,
@@ -134,6 +132,41 @@ app.get('/createworkout', async (req, res) => {
   }
 })
 
+async function createWorkout (equipmentIds) {
+  const movements = await getPossibleMovements(equipmentIds)
+  return {
+    type: 'AMRAP',
+    time: 15,
+    movements: movements
+  }
+}
+
+async function getPossibleMovements (equipmentIds) {
+  const equipmentNames = (await getAllEquipment())
+    .filter(elem => equipmentIds.indexOf(elem.id) !== -1)
+    .map(elem => elem.name)
+  const result = []
+  ;(await MOVEMENTS).forEach(movement => {
+    if (!movement.requires || equipmentNames.indexOf(movement.requires) !== -1) {
+      result.push(movement)
+    }
+  })
+  return result
+}
+
+// -------------------- SQL HELPER FUNCTIONS -------------------- //
+/**
+ * Creates a new profile with name matching the profile parameter. Does not check if profile already exists.
+ * @param {string} profile the name of the profile
+ * @throws {error} on any server error
+ */
+async function insertNewProfile (profile) {
+  const db = await getDBConnection(WOD_GEN_DB)
+  const qry = 'INSERT INTO profiles (name, equipment_ids) VALUES (?, ?);'
+  await db.run(qry, [profile, JSON.stringify([])])
+  db.close()
+}
+
 /**
  * Gets the profile from the WOD_GEN_DB file with matching name.
  * @param {string} profile name of the profile in profiles table
@@ -149,32 +182,6 @@ async function getProfile (profile) {
   }
   db.close()
   return result
-}
-
-/**
- * Creates a new profile with name matching the profile parameter. Does not check if profile already exists.
- * @param {string} profile the name of the profile
- * @throws {error} on any server error
- */
-async function createNewProfile (profile) {
-  const db = await getDBConnection(WOD_GEN_DB)
-  const qry = 'INSERT INTO profiles (name, equipment_ids) VALUES (?, ?);'
-  await db.run(qry, [profile, JSON.stringify([])])
-  db.close()
-}
-
-async function selectEquipment (profileName, id) {
-  const profile = await getProfile(profileName)
-  const equipmentIds = profile.equipment_ids
-  if (equipmentIds.indexOf(id) === -1) {
-    equipmentIds.push(id)
-  } else {
-    equipmentIds.splice(equipmentIds.indexOf(id), 1)
-  }
-  const db = await getDBConnection(WOD_GEN_DB)
-  const qry = 'UPDATE profiles SET equipment_ids = ? WHERE id = ?;'
-  await db.run(qry, [JSON.stringify(equipmentIds), profile.id])
-  db.close()
 }
 
 async function getAllEquipment () {
@@ -193,26 +200,18 @@ async function getEquipment (equipment) {
   return result
 }
 
-async function createWorkout (equipmentIds) {
-  const movements = await getPossibleMovements(equipmentIds)
-  return {
-    type: 'AMRAP',
-    time: 15,
-    movements: movements
+async function updateSelectEquipment (profileName, id) {
+  const profile = await getProfile(profileName)
+  const equipmentIds = profile.equipment_ids
+  if (equipmentIds.indexOf(id) === -1) {
+    equipmentIds.push(id)
+  } else {
+    equipmentIds.splice(equipmentIds.indexOf(id), 1)
   }
-}
-
-async function getPossibleMovements (equipmentIds) {
-  const equipmentNames = (await getAllEquipment())
-                          .filter(elem => equipmentIds.indexOf(elem.id) !== -1)
-                          .map(elem => elem.name)
-  const result = []
-  MOVEMENTS.forEach(movement => {
-    if (!movement.requires || equipmentNames.indexOf(movement.requires) !== -1) {
-      result.push(movement)
-    }
-  })
-  return result
+  const db = await getDBConnection(WOD_GEN_DB)
+  const qry = 'UPDATE profiles SET equipment_ids = ? WHERE id = ?;'
+  await db.run(qry, [JSON.stringify(equipmentIds), profile.id])
+  db.close()
 }
 
 /**
