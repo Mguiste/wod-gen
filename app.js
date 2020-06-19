@@ -99,7 +99,7 @@ app.post('/selectequipment', async (req, res) => {
         error: 'Equipment ' + equipmentName + ' does not exist'
       })
     }
-    await updateSelectEquipment(profileName, equipment.id)
+    await selectEquipment(profileName, equipment.id)
     profile = await getProfile(profileName)
     res.status(200).json({
       profile: profileName,
@@ -154,6 +154,18 @@ async function getPossibleMovements (equipmentIds) {
   return result
 }
 
+async function selectEquipment (profileName, eid) {
+  const profile = await getProfile(profileName)
+  const equipmentIds = profile.equipment_ids
+  // toggle selected status of id
+  if (equipmentIds.indexOf(eid) === -1) {
+    equipmentIds.push(eid)
+  } else {
+    equipmentIds.splice(equipmentIds.indexOf(eid), 1)
+  }
+  await updateSelectEquipment(profile.id, equipmentIds)
+}
+
 // -------------------- SQL HELPER FUNCTIONS -------------------- //
 /**
  * Creates a new profile with name matching the profile parameter. Does not check if profile already exists.
@@ -200,17 +212,10 @@ async function getEquipment (equipment) {
   return result
 }
 
-async function updateSelectEquipment (profileName, id) {
-  const profile = await getProfile(profileName)
-  const equipmentIds = profile.equipment_ids
-  if (equipmentIds.indexOf(id) === -1) {
-    equipmentIds.push(id)
-  } else {
-    equipmentIds.splice(equipmentIds.indexOf(id), 1)
-  }
+async function updateSelectEquipment (id, equipmentIds) {
   const db = await getDBConnection(WOD_GEN_DB)
   const qry = 'UPDATE profiles SET equipment_ids = ? WHERE id = ?;'
-  await db.run(qry, [JSON.stringify(equipmentIds), profile.id])
+  await db.run(qry, [JSON.stringify(equipmentIds), id])
   db.close()
 }
 
