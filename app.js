@@ -170,7 +170,7 @@ async function selectEquipment (profileName, eid) {
 /**
  * Creates a new profile with name matching the profile parameter. Does not check if profile already exists.
  * @param {string} profile the name of the profile
- * @throws {error} on any server error
+ * @throws {error} on any database error
  */
 async function insertNewProfile (profile) {
   const db = await getDBConnection(WOD_GEN_DB)
@@ -183,7 +183,7 @@ async function insertNewProfile (profile) {
  * Gets the profile from the WOD_GEN_DB file with matching name.
  * @param {string} profile name of the profile in profiles table
  * @returns {object} the entry in profiles with the matching profile and undefined if no matching entry found
- * @throws {error} on any server error
+ * @throws {error} on any database error
  */
 async function getProfile (profile) {
   const db = await getDBConnection(WOD_GEN_DB)
@@ -196,6 +196,11 @@ async function getProfile (profile) {
   return result
 }
 
+/**
+ * Gets all the equipment from the "equipment" tables.
+ * @returns {array} of equipment in wod-gen.db "equipment" table
+ * @throws {error} on any database error
+ */
 async function getAllEquipment () {
   const db = await getDBConnection(WOD_GEN_DB)
   const qry = 'SELECT * FROM equipment;'
