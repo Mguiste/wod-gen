@@ -5,7 +5,7 @@
  * The frontend JavaScript file for the main wod gens page after logging in.
  */
 'use strict'
-import { id, gen, show, hide } from './modules/helper.mjs'
+import { id, gen, showMessage } from './modules/helper.mjs'
 import { getAllEquipment, getProfile, postSelectEquipment } from './modules/request.mjs'
 ;(function () {
   window.addEventListener('load', init)
@@ -36,7 +36,7 @@ import { getAllEquipment, getProfile, postSelectEquipment } from './modules/requ
         htmlEquipmentContainer.appendChild(htmlEquipment)
       })
     } catch (error) {
-      displayMessage('Error: failed to load equipment')
+      showMessage('failed to load equipment', false)
     }
   }
 
@@ -54,13 +54,6 @@ import { getAllEquipment, getProfile, postSelectEquipment } from './modules/requ
     return div
   }
 
-  function displayMessage (msg) {
-    const htmlMsg = id('usr-msg')
-    htmlMsg.textContent = msg
-    show(htmlMsg)
-    setTimeout(() => hide(htmlMsg), 3000)
-  }
-
   // -------------------- EVENT HANDLER FUNCTIONS -------------------- //
   function logOutClick () {
     window.sessionStorage.removeItem('profile')
@@ -73,12 +66,12 @@ import { getAllEquipment, getProfile, postSelectEquipment } from './modules/requ
       const htmlEquipment = event.currentTarget
       const response = await postSelectEquipment(window.sessionStorage.getItem('profile'), equipment)
       if (response.error) {
-        displayMessage('Error: profile or equipment does not exist')
+        showMessage('profile or equipment does not exist', false)
       } else {
         htmlEquipment.classList.toggle('selected')
       }
     } catch (error) {
-      displayMessage('Error: failed to select equipment "' + equipment + '"')
+      showMessage('failed to select equipment "' + equipment + '"', false)
     }
   }
 })()
