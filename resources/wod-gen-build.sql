@@ -10,12 +10,12 @@ CREATE TABLE equipment (
 );
 
 INSERT INTO equipment (name) VALUES
-  ("Barbells"),
-  ("Dumbbells"),
-  ("Row"),
-  ("Bike"),
-  ("Skierg"),
-  ("Wall Balls"),
-  ("Kettle Bell"),
-  ("Pull Up Bar"),
-  ("Sled");
+  ("barbells"),
+  ("dumbbells"),
+  ("row"),
+  ("bike"),
+  ("skierg"),
+  ("wall balls"),
+  ("kettle bell"),
+  ("pull up bar"),
+  ("sled");
