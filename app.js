@@ -9,13 +9,21 @@ const express = require('express')
 const sqlite3 = require('sqlite3')
 const sqlite = require('sqlite')
 const multer = require('multer')
+const fs = require('fs').promises
 const app = express()
 
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 app.use(multer().none())
 
-const WOD_GEN_DB = 'resources/wod-gen.db'
+const RESOURCE_FOLDER = 'resources'
+const WOD_GEN_DB = RESOURCE_FOLDER + '/wod-gen.db'
+const MOVEMENTS_FILE = RESOURCE_FOLDER + '/movements.json'
+let MOVEMENTS
+fs.readFile(MOVEMENTS_FILE)
+  .then(JSON.parse)
+  .then(data => MOVEMENTS = data)
+  .catch(() => console.error('broken'))
 
 app.post('/createprofile', async (req, res) => {
   const profileName = req.body.profile
@@ -104,6 +112,28 @@ app.post('/selectequipment', async (req, res) => {
   }
 })
 
+app.get('/createworkout', async (req, res) => {
+  const profileName = req.query.profile
+  if (!profileName) {
+    res.status(400).type('text').send('Error: missing query parameter "profile"')
+    return
+  }
+  try {
+    const profile = await getProfile(profileName)
+    if (!profile) {
+      res.status(200).json({
+        error: 'Profile ' + profileName + ' does not exist'
+      })
+      return
+    }
+    const workout = await createWorkout(profile.equipment_ids)
+    res.status(200).json(workout)
+  } catch (error) {
+    console.log(error)
+    res.status(500).type('text').send('Error: database error on server')
+  }
+})
+
 /**
  * Gets the profile from the WOD_GEN_DB file with matching name.
  * @param {string} profile name of the profile in profiles table
@@ -160,6 +190,28 @@ async function getEquipment (equipment) {
   const qry = 'SELECT * FROM equipment WHERE name = ?;'
   const result = await db.get(qry, [equipment])
   db.close()
+  return result
+}
+
+async function createWorkout (equipmentIds) {
+  const movements = await getPossibleMovements(equipmentIds)
+  return {
+    type: 'AMRAP',
+    time: 15,
+    movements: movements
+  }
+}
+
+async function getPossibleMovements (equipmentIds) {
+  const equipmentNames = (await getAllEquipment())
+                          .filter(elem => equipmentIds.indexOf(elem.id) !== -1)
+                          .map(elem => elem.name)
+  const result = []
+  MOVEMENTS.forEach(movement => {
+    if (!movement.requires || equipmentNames.indexOf(movement.requires) !== -1) {
+      result.push(movement)
+    }
+  })
   return result
 }
 

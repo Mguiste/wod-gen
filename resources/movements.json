@@ -1,0 +1,17 @@
+[
+    {
+      "name": "run"
+    },
+    {
+      "name": "back squat",
+      "requires": "barbells"
+    },
+    {
+      "name": "front squat",
+      "requires": "barbells"
+    },
+    {
+      "name": "dumbell bench press",
+      "requires": "dumbbells"
+    }
+]
