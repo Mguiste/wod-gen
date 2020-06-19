@@ -14,6 +14,10 @@ function shouldShowMessage (action, success) {
   cy.get('.message').should('not.exist')
 }
 
+Cypress.Commands.add('getSessionStorage', (key) => {
+  cy.window().then((window) => window.sessionStorage.getItem(key))
+})
+
 describe('Index page tests', () => {
   beforeEach(() => {
     cy.exec('npm run reset:database')
@@ -32,6 +36,7 @@ describe('Index page tests', () => {
       shouldShowMessage(() => cy.get('#new-profile').click(), true)
       cy.get('#login').click()
       cy.location().should(loc => assert.strictEqual(loc.pathname, '/main.html'))
+      cy.getSessionStorage('profile').should('eq', 'jackson')
     })
   })
   describe('CreateProfile', () => {
