@@ -36,7 +36,6 @@ import { getAllEquipment, getProfile, postSelectEquipment } from './modules/requ
         htmlEquipmentContainer.appendChild(htmlEquipment)
       })
     } catch (error) {
-      console.log(error)
       displayMessage('Error: failed to load equipment')
     }
   }
