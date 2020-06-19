@@ -74,6 +74,7 @@ function showMessage (msg, success) {
   message.textContent = success ? 'SUCCESS: ' + msg : 'ERROR: ' + msg
   const button = gen('button')
   button.textContent = 'X'
+  button.classList.add('selectable')
   button.addEventListener('click', messageCloseButtonClick)
   messageContainer.appendChild(message)
   messageContainer.appendChild(button)
