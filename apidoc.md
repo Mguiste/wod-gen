@@ -80,7 +80,8 @@ Error: missing query parameter "profile"
 ```
 Error: database error on server
 ```
-## Get all of the equipment
+
+## Get all of the equipment.
 **Request Format:** `/allequipment`
 
 **Request Type:** `GET`
@@ -156,6 +157,57 @@ Error: database error on server
 ```
 Error: missing body parameter "profile" and/or "equipment"
 ```
+- If a database error occurs on server `500 code`
+```
+Error: database error on server
+```
+
+## Create a workout.
+**Request Format:** `/createworkout`
+
+**Request Type:** `GET`
+
+**Returned Data Format**: `JSON`
+
+**Description:** Returns list of all the equipment on the server.
+- `type` (string) type of workout (AMRAP/Time)
+- `rounds` (int) number of rounds in the workout
+- `time` (optional) (int) if AMRAP workout how long the workout is
+- `movements` array of movements in the workout
+  - `name` (string) name of the movement
+  - `reps` (int) number of reps for the movement
+  - `weight` (optional) (string) if a non-body weight movement the level of weight for the movement
+
+**Example Request:** /createworkout
+
+**Example Response:**
+```json
+{
+  "type": "AMRAP",
+  "time": 15,
+  "movements": [
+    {
+      "name": "Run",
+      "reps": 400,
+      "scale": "Meters"
+    },
+    {
+      "name": "Back Squat",
+      "reps": 10,
+      "scale": "reps",
+      "weight": "medium"
+    },
+    {
+      "name": "Wall Balls",
+      "reps": 20,
+      "scale": "reps",
+      "weight": "medium"
+    }
+  ]
+}
+```
+
+**Error Handling:**
 - If a database error occurs on server `500 code`
 ```
 Error: database error on server
