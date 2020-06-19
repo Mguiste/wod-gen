@@ -5,23 +5,14 @@
  * The backend JavaScript file wod gen.
  */
 'use strict'
+const resource = require('./resource.js')
 const express = require('express')
-const sqlite3 = require('sqlite3')
-const sqlite = require('sqlite')
 const multer = require('multer')
-const fs = require('fs').promises
 const app = express()
 
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 app.use(multer().none())
-
-const RESOURCE_FOLDER = 'resources'
-const WOD_GEN_DB = RESOURCE_FOLDER + '/wod-gen.db'
-const MOVEMENTS_FILE = RESOURCE_FOLDER + '/movements.json'
-const MOVEMENTS = fs.readFile(MOVEMENTS_FILE)
-  .then(JSON.parse)
-  .catch(() => console.error('broken'))
 
 app.post('/createprofile', async (req, res) => {
   const profileName = req.body.profile
@@ -30,15 +21,15 @@ app.post('/createprofile', async (req, res) => {
     return
   }
   try {
-    let profile = await getProfile(profileName)
+    let profile = await resource.getProfile(profileName)
     if (profile) {
       res.status(200).json({
         error: 'Profile ' + profileName + ' already exists'
       })
       return
     } else {
-      await insertNewProfile(profileName)
-      profile = await getProfile(profileName)
+      await resource.insertNewProfile(profileName)
+      profile = await resource.getProfile(profileName)
       res.status(200).json(profile)
       return
     }
@@ -54,7 +45,7 @@ app.get('/getprofile', async (req, res) => {
     return
   }
   try {
-    const profile = await getProfile(profileName)
+    const profile = await resource.getProfile(profileName)
     if (profile) {
       res.status(200).json(profile)
       return
@@ -71,7 +62,7 @@ app.get('/getprofile', async (req, res) => {
 
 app.get('/allequipment', async (req, res) => {
   try {
-    const equipment = await getAllEquipment()
+    const equipment = await resource.getAllEquipment()
     res.status(200).json(equipment)
   } catch (error) {
     res.status(500).type('text').send('Error: database error on server')
@@ -86,21 +77,21 @@ app.post('/selectequipment', async (req, res) => {
     return
   }
   try {
-    let profile = await getProfile(profileName)
+    let profile = await resource.getProfile(profileName)
     if (!profile) {
       res.status(200).json({
         error: 'Profile ' + profileName + ' does not exist'
       })
       return
     }
-    const equipment = await getEquipment(equipmentName)
+    const equipment = await resource.getEquipment(equipmentName)
     if (!equipment) {
       res.status(200).json({
         error: 'Equipment ' + equipmentName + ' does not exist'
       })
     }
     await selectEquipment(profileName, equipment.id)
-    profile = await getProfile(profileName)
+    profile = await resource.getProfile(profileName)
     res.status(200).json({
       profile: profileName,
       equipment: equipmentName
@@ -117,7 +108,7 @@ app.get('/createworkout', async (req, res) => {
     return
   }
   try {
-    const profile = await getProfile(profileName)
+    const profile = await resource.getProfile(profileName)
     if (!profile) {
       res.status(200).json({
         error: 'Profile ' + profileName + ' does not exist'
@@ -142,11 +133,11 @@ async function createWorkout (equipmentIds) {
 }
 
 async function getPossibleMovements (equipmentIds) {
-  const equipmentNames = (await getAllEquipment())
+  const equipmentNames = (await resource.getAllEquipment())
     .filter(elem => equipmentIds.indexOf(elem.id) !== -1)
     .map(elem => elem.name)
   const result = []
-  ;(await MOVEMENTS).forEach(movement => {
+  ;(await resource.MOVEMENTS).forEach(movement => {
     if (!movement.requires || equipmentNames.indexOf(movement.requires) !== -1) {
       result.push(movement)
     }
@@ -155,7 +146,7 @@ async function getPossibleMovements (equipmentIds) {
 }
 
 async function selectEquipment (profileName, eid) {
-  const profile = await getProfile(profileName)
+  const profile = await resource.getProfile(profileName)
   const equipmentIds = profile.equipment_ids
   // toggle selected status of id
   if (equipmentIds.indexOf(eid) === -1) {
@@ -163,92 +154,7 @@ async function selectEquipment (profileName, eid) {
   } else {
     equipmentIds.splice(equipmentIds.indexOf(eid), 1)
   }
-  await updateSelectEquipment(profile.id, equipmentIds)
-}
-
-// -------------------- SQL HELPER FUNCTIONS -------------------- //
-/**
- * Creates a new profile with name matching the profile parameter. Does not check if profile already exists.
- * @param {string} profile the name of the profile
- * @throws {error} on any database error
- */
-async function insertNewProfile (profile) {
-  const db = await getDBConnection(WOD_GEN_DB)
-  const qry = 'INSERT INTO profiles (name, equipment_ids) VALUES (?, ?);'
-  await db.run(qry, [profile, JSON.stringify([])])
-  db.close()
-}
-
-/**
- * Gets the profile from the WOD_GEN_DB file with matching name.
- * @param {string} profile name of the profile in profiles table
- * @returns {object} the entry in profiles with the matching profile and undefined if no matching entry found
- * @throws {error} on any database error
- */
-async function getProfile (profile) {
-  const db = await getDBConnection(WOD_GEN_DB)
-  const qry = 'SELECT * FROM profiles WHERE name = ?;'
-  const result = await db.get(qry, [profile])
-  if (result) {
-    result.equipment_ids = JSON.parse(result.equipment_ids)
-  }
-  db.close()
-  return result
-}
-
-/**
- * Gets all the equipment from the "equipment" tables.
- * @returns {array} of equipment in "equipment" table
- * @throws {error} on any database error
- */
-async function getAllEquipment () {
-  const db = await getDBConnection(WOD_GEN_DB)
-  const qry = 'SELECT * FROM equipment;'
-  const result = await db.all(qry)
-  db.close()
-  return result
-}
-
-/**
- * Gets a specific equipment in the equipment table.
- * @param {string} equipment name of the equipment
- * @returns {object} the equipment from the "equipment" table
- * @throws {error} on any database error
- */
-async function getEquipment (equipment) {
-  const db = await getDBConnection(WOD_GEN_DB)
-  const qry = 'SELECT * FROM equipment WHERE name = ?;'
-  const result = await db.get(qry, [equipment])
-  db.close()
-  return result
-}
-
-/**
- * Replaces the selected equipment ids with the passed in equipment ids for the profile.
- * @param {int} id of the profile to update
- * @param {array} equipmentIds the new equipment ids for the profile to save
- */
-async function updateSelectEquipment (id, equipmentIds) {
-  const db = await getDBConnection(WOD_GEN_DB)
-  const qry = 'UPDATE profiles SET equipment_ids = ? WHERE id = ?;'
-  await db.run(qry, [JSON.stringify(equipmentIds), id])
-  db.close()
-}
-
-/**
- * Establishes a database connection to the provided file database and returns the database object.
- * Any errors that occur during connection should be caught in the function
- * that calls this one.
- * @param {string} file the path of the file to connect to
- * @returns {object} The database object for the connection.
- * @throws {error} on any database connection error
- */
-async function getDBConnection (file) {
-  const db = await sqlite.open({
-    filename: file,
-    driver: sqlite3.Database
-  })
-  return db
+  await resource.updateSelectEquipment(profile.id, equipmentIds)
 }
 
 app.use(express.static('public'))
