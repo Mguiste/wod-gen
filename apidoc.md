@@ -163,7 +163,8 @@ Error: database error on server
 ```
 
 ## Create a workout.
-**Request Format:** `/createworkout`
+**Request Format:** `/createworkout` endpoint with query parameters of...
+- `profile` (string) name of the profile to create the workout for
 
 **Request Type:** `GET`
 
@@ -208,6 +209,10 @@ Error: database error on server
 ```
 
 **Error Handling:**
+- If missing body parameter `profile` `400 code`
+```
+Error: missing query parameter "profile"
+```
 - If a database error occurs on server `500 code`
 ```
 Error: database error on server
