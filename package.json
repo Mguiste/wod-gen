@@ -28,6 +28,13 @@
     "standard": "^14.3.4"
   },
   "standard": {
-    "globals": ["describe", "it", "assert", "cy", "beforeEach", "after"]
+    "globals": [
+      "describe",
+      "it",
+      "assert",
+      "cy",
+      "beforeEach",
+      "after"
+    ]
   }
 }
