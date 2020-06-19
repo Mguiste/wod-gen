@@ -209,6 +209,12 @@ Error: database error on server
 ```
 
 **Error Handling:**
+- If profile does not exist on server `200 code`
+```json
+{
+  "error": "Profile <profile> does not exist"
+}
+```
 - If missing body parameter `profile` `400 code`
 ```
 Error: missing query parameter "profile"
