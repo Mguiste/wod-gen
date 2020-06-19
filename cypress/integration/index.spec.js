@@ -2,9 +2,8 @@
  * Name: Mason Guiste
  * Date: 6/17/20
  *
- * The test file for index page.
+ * The test file for the index page.
  */
-
 function shouldShowMessage (action, success) {
   action()
   cy.get('.message')
