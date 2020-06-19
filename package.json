@@ -4,7 +4,8 @@
   "description": "Node.js for the wod-gen project",
   "main": "app.js",
   "scripts": {
-    "test": "standard && cypress run"
+    "test": "standard && cypress run",
+    "reset:database": "cd resources; rm wod-gen.db; touch wod-gen.db; sqlite3 wod-gen.db '.read wod-gen-build.sql'"
   },
   "repository": {
     "type": "git",
@@ -27,6 +28,6 @@
     "standard": "^14.3.4"
   },
   "standard": {
-    "globals": ["describe", "it", "assert", "cy"]
+    "globals": ["describe", "it", "assert", "cy", "beforeEach"]
   }
 }
