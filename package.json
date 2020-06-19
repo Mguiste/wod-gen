@@ -34,7 +34,8 @@
       "assert",
       "cy",
       "beforeEach",
-      "after"
+      "after",
+      "Cypress"
     ]
   }
 }
