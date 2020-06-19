@@ -198,7 +198,7 @@ async function getProfile (profile) {
 
 /**
  * Gets all the equipment from the "equipment" tables.
- * @returns {array} of equipment in wod-gen.db "equipment" table
+ * @returns {array} of equipment in "equipment" table
  * @throws {error} on any database error
  */
 async function getAllEquipment () {
@@ -209,6 +209,12 @@ async function getAllEquipment () {
   return result
 }
 
+/**
+ * Gets a specific equipment in the equipment table.
+ * @param {string} equipment name of the equipment
+ * @returns {object} the equipment from the "equipment" table
+ * @throws {error} on any database error
+ */
 async function getEquipment (equipment) {
   const db = await getDBConnection(WOD_GEN_DB)
   const qry = 'SELECT * FROM equipment WHERE name = ?;'
@@ -217,6 +223,11 @@ async function getEquipment (equipment) {
   return result
 }
 
+/**
+ * Replaces the selected equipment ids with the passed in equipment ids for the profile.
+ * @param {int} id of the profile to update
+ * @param {array} equipmentIds the new equipment ids for the profile to save
+ */
 async function updateSelectEquipment (id, equipmentIds) {
   const db = await getDBConnection(WOD_GEN_DB)
   const qry = 'UPDATE profiles SET equipment_ids = ? WHERE id = ?;'
