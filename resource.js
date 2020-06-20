@@ -1,3 +1,10 @@
+/**
+ * Name: Mason Guiste
+ * Date: 6/19/20
+ *
+ * Helper file for all manipulations to data in the resources folder. Has helper methods for sql
+ * manipulation. Also has consts for accessing movements.json location and contents.
+ */
 const sqlite3 = require('sqlite3')
 const sqlite = require('sqlite')
 const fs = require('fs').promises
