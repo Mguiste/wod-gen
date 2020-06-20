@@ -2,7 +2,8 @@
  * Name: Mason Guiste
  * Date: 6/11/20
  *
- * The backend JavaScript file wod gen.
+ * Main backend JavaScript file for the node.js application. Serves the public files and handles
+ * all requests.
  */
 'use strict'
 const resource = require('./resource.js')
