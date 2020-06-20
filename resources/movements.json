@@ -1,17 +1,99 @@
 [
-    {
-      "name": "run"
-    },
-    {
-      "name": "back squat",
-      "requires": "barbells"
-    },
-    {
-      "name": "front squat",
-      "requires": "barbells"
-    },
-    {
-      "name": "dumbell bench press",
-      "requires": "dumbbells"
-    }
+  {
+    "name": "run"
+  },
+  {
+    "name": "back squat",
+    "requires": "barbells"
+  },
+  {
+    "name": "front squat",
+    "requires": "barbells"
+  },
+  {
+    "name": "dumbbell bench press",
+    "requires": "dumbbells"
+  },
+  {
+    "name": "row",
+    "requires": "row"
+  },
+  {
+    "name": "bike",
+    "requires": "bike"
+  },
+  {
+    "name": "kettle bell swing",
+    "requires": "kettle bells"
+  },
+  {
+    "name": "power cleans",
+    "requires": "barbells"
+  },
+  {
+    "name": "hang cleans",
+    "requires": "barbells"
+  },
+  {
+    "name": "sit ups"
+  },
+  {
+    "name": "air squats"
+  },
+  {
+    "name": "push ups"
+  },
+  {
+    "name": "push press",
+    "requires": "barbells"
+  },
+  {
+    "name": "strict press",
+    "requires": "barbells"
+  },
+  {
+    "name": "clean & jerk",
+    "requires": "barbells"
+  },
+  {
+    "name": "chest flies",
+    "requires": "dumbbells"
+  },
+  {
+    "name": "dumbbell row",
+    "requires": "dumbbells"
+  },
+  {
+    "name": "wall balls",
+    "requires": "wall balls"
+  },
+  {
+    "name": "russian twists",
+    "requires": "dumbbells"
+  },
+  {
+    "name": "burpee"
+  },
+  {
+    "name": "chest to bar pull ups",
+    "requires": "pull up bar"
+  },
+  {
+    "name": "pull ups",
+    "requires": "pull up bar"
+  },
+  {
+    "name": "strict pull ups",
+    "requires": "pull up bar"
+  },
+  {
+    "name": "jumping lunge"
+  },
+  {
+    "name": "air lunge"
+  },
+  {
+    "name": "lunge",
+    "requires": "barbells"
+  }
 ]
