@@ -11,6 +11,9 @@ const express = require('express')
 const multer = require('multer')
 const app = express()
 
+const MIN_MOVEMENTS = 2
+const MAX_MOVEMENTS = 4
+
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 app.use(multer().none())
@@ -104,7 +107,9 @@ app.post('/selectequipment', async (req, res) => {
 
 app.get('/createworkout', async (req, res) => {
   const profileName = req.query.profile
-  if (!profileName) {
+  const time = req.query.time
+  const rounds = parseInt(req.query.rounds)
+  if (!profileName || !time || !rounds) {
     res.status(400).type('text').send('Error: missing query parameter "profile"')
     return
   }
@@ -116,21 +121,29 @@ app.get('/createworkout', async (req, res) => {
       })
       return
     }
-    const workout = await createWorkout(profile.equipment_ids)
-    res.status(200).json(workout)
+    const workout = await createWorkout(profile.equipment_ids, time, rounds)
+    res.status(200).json({
+      type: 'AMRAP',
+      rounds: rounds,
+      time: parseInt(time),
+      movements: workout
+    })
   } catch (error) {
     console.log(error)
     res.status(500).type('text').send('Error: database error on server')
   }
 })
 
-async function createWorkout (equipmentIds) {
-  const movements = await getPossibleMovements(equipmentIds)
-  return {
-    type: 'AMRAP',
-    time: 15,
-    movements: movements
+async function createWorkout (equipmentIds, time, rounds) {
+  const possibleMovements = await getPossibleMovements(equipmentIds)
+  const numMovements = Math.floor(Math.random() * (MAX_MOVEMENTS - MIN_MOVEMENTS + 1) + MIN_MOVEMENTS)
+  const timePerMovement = time / (rounds * numMovements)
+  const movements = []
+  for (let i = 0; i < numMovements; i++) {
+    const index = Math.floor(Math.random() * possibleMovements.length)
+    movements.push(createMovement(possibleMovements[index], timePerMovement))
   }
+  return movements
 }
 
 async function getPossibleMovements (equipmentIds) {
@@ -144,6 +157,34 @@ async function getPossibleMovements (equipmentIds) {
     }
   })
   return result
+}
+
+function createMovement (movement, time) {
+  const unit = randomArrayElement(movement.units)
+  let reps
+  if (unit.rep_time) {
+    reps = Math.floor(time / unit.rep_time)
+  } else {
+    let closestTime = Number.MAX_SAFE_INTEGER
+    console.log(closestTime)
+    Object.keys(unit.rep_times).forEach(rep => {
+      const newTime = Math.abs(time - unit.rep_times[rep])
+      console.log(newTime)
+      if (newTime < closestTime) {
+        reps = parseInt(rep)
+        closestTime = newTime
+      }
+    })
+  }
+  return {
+    name: movement.name,
+    reps: reps,
+    unit: unit.name
+  }
+}
+
+function randomArrayElement (arr) {
+  return arr[Math.floor(Math.random() * arr.length)]
 }
 
 async function selectEquipment (profileName, eid) {

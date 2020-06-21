@@ -1,99 +1,65 @@
 [
   {
-    "name": "run"
+    "name": "run",
+    "units": [
+      {
+        "name": "meters",
+        "rep_times": {
+          "100": 20,
+          "200": 45,
+          "400": 100,
+          "800": 240,
+          "1600": 540,
+          "3200": 1050
+        }
+      }
+    ]
   },
   {
     "name": "back squat",
-    "requires": "barbells"
+    "requires": "barbells",
+    "units": [
+      {
+        "name": "light",
+        "rep_time": 3
+      }
+    ]
   },
   {
-    "name": "front squat",
-    "requires": "barbells"
+    "name": "sit ups",
+    "units": [
+      {
+        "name": "rep",
+        "rep_time": 2
+      }
+    ]
   },
   {
-    "name": "dumbbell bench press",
-    "requires": "dumbbells"
+    "name": "air squats",
+    "units": [
+      {
+        "name": "rep",
+        "rep_time": 1.5
+      }
+    ]
   },
   {
-    "name": "row",
-    "requires": "row"
-  },
-  {
-    "name": "bike",
-    "requires": "bike"
-  },
-  {
-    "name": "kettle bell swing",
-    "requires": "kettle bells"
-  },
-  {
-    "name": "power cleans",
-    "requires": "barbells"
-  },
-  {
-    "name": "hang cleans",
-    "requires": "barbells"
-  },
-  {
-    "name": "sit ups"
-  },
-  {
-    "name": "air squats"
-  },
-  {
-    "name": "push ups"
+    "name": "push ups",
+    "units": [
+      {
+        "name": "rep",
+        "rep_time": 2.75
+      }
+    ]
   },
   {
     "name": "push press",
-    "requires": "barbells"
-  },
-  {
-    "name": "strict press",
-    "requires": "barbells"
-  },
-  {
-    "name": "clean & jerk",
-    "requires": "barbells"
-  },
-  {
-    "name": "chest flies",
-    "requires": "dumbbells"
-  },
-  {
-    "name": "dumbbell row",
-    "requires": "dumbbells"
-  },
-  {
-    "name": "wall balls",
-    "requires": "wall balls"
-  },
-  {
-    "name": "russian twists",
-    "requires": "dumbbells"
-  },
-  {
-    "name": "burpee"
-  },
-  {
-    "name": "chest to bar pull ups",
-    "requires": "pull up bar"
-  },
-  {
-    "name": "pull ups",
-    "requires": "pull up bar"
-  },
-  {
-    "name": "strict pull ups",
-    "requires": "pull up bar"
-  },
-  {
-    "name": "jumping lunge"
-  },
-  {
-    "name": "air lunge"
-  },
-  {
-    "name": "lunge",
-    "requires": "barbells"
+    "requires": "barbells",
+    "units": [
+      {
+        "name": "light",
+        "rep_time": 1
+      }
+    ]
   }
 ]
