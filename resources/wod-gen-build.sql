@@ -18,4 +18,5 @@ INSERT INTO equipment (name) VALUES
   ("wall balls"),
   ("kettle bell"),
   ("pull up bar"),
-  ("sled");
+  ("sled"),
+  ("box jump");
