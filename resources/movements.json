@@ -10,26 +10,26 @@
           "400": 100,
           "800": 240,
           "1600": 540,
-          "3200": 1050
+          "3200": 1010
         }
       }
     ]
   },
   {
-    "name": "back squat",
+    "name": "back squats",
     "requires": "barbells",
     "units": [
       {
         "name": "light",
-        "rep_time": 3
+        "rep_time": 4
       },
       {
         "name": "medium",
-        "rep_time": 3.5
+        "rep_time": 5
       },
       {
         "name": "heavy",
-        "rep_time": 4
+        "rep_time": 6
       }
     ]
   },
@@ -75,6 +75,142 @@
       {
         "name": "heavy",
         "rep_time": 4.5
+      }
+    ]
+  },
+  {
+    "name": "sit up strikes",
+    "units": [
+      {
+        "name": "rep",
+        "rep_time": 2
+      }
+    ]
+  },
+  {
+    "name": "dumbbell skull crushers",
+    "requires": "dumbbells",
+    "units": [
+      {
+        "name": "light",
+        "rep_time": 2.5
+      },
+      {
+        "name": "medium",
+        "rep_time": 3.5
+      },
+      {
+        "name": "heavy",
+        "rep_time": 4.5
+      }
+    ]
+  },
+  {
+    "name": "dumbbell bench press",
+    "requires": "dumbbells",
+    "units": [
+      {
+        "name": "light",
+        "rep_time": 2.5
+      },
+      {
+        "name": "medium",
+        "rep_time": 3.5
+      },
+      {
+        "name": "heavy",
+        "rep_time": 4.5
+      }
+    ]
+  },
+  {
+    "name": "bench press",
+    "requires": "barbells",
+    "units": [
+      {
+        "name": "light",
+        "rep_time": 3
+      },
+      {
+        "name": "medium",
+        "rep_time": 4
+      },
+      {
+        "name": "heavy",
+        "rep_time": 5
+      }
+    ]
+  },
+  {
+    "name": "strict press",
+    "requires": "barbells",
+    "units": [
+      {
+        "name": "light",
+        "rep_time": 3.5
+      },
+      {
+        "name": "medium",
+        "rep_time": 4.5
+      },
+      {
+        "name": "heavy",
+        "rep_time": 5.5
+      }
+    ]
+  },
+  {
+    "name": "burbee",
+    "units": [
+      {
+        "name": "rep",
+        "rep_time": 4
+      }
+    ]
+  },
+  {
+    "name": "power clean",
+    "requires": "barbells",
+    "units": [
+      {
+        "name": "light",
+        "rep_time": 4
+      },
+      {
+        "name": "medium",
+        "rep_time": 5
+      },
+      {
+        "name": "heavy",
+        "rep_time": 6
+      }
+    ]
+  },
+  {
+    "name": "pull ups",
+    "requires": "pull up bar",
+    "units": [
+      {
+        "name": "rep",
+        "rep_time": 4.5
+      }
+    ]
+  },
+  {
+    "name": "hang clean",
+    "requires": "barbells",
+    "units": [
+      {
+        "name": "light",
+        "rep_time": 3.5
+      },
+      {
+        "name": "medium",
+        "rep_time": 4.5
+      },
+      {
+        "name": "heavy",
+        "rep_time": 5.5
       }
     ]
   }
