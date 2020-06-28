@@ -14,7 +14,6 @@ const WOD_GEN_DB = RESOURCE_FOLDER + '/wod-gen.db'
 const MOVEMENTS_FILE = RESOURCE_FOLDER + '/movements.json'
 const MOVEMENTS = fs.readFile(MOVEMENTS_FILE)
   .then(JSON.parse)
-  .catch(() => console.error('broken'))
 exports.MOVEMENTS = MOVEMENTS
 
 /**
