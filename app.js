@@ -107,7 +107,7 @@ app.post('/selectequipment', async (req, res) => {
 
 app.get('/createworkout', async (req, res) => {
   const profileName = req.query.profile
-  const time = req.query.time
+  const time = parseInt(req.query.time)
   const rounds = parseInt(req.query.rounds)
   if (!profileName || !time || !rounds) {
     res.status(400).type('text').send('Error: missing query parameter "profile"')
@@ -129,7 +129,6 @@ app.get('/createworkout', async (req, res) => {
       movements: workout
     })
   } catch (error) {
-    console.log(error)
     res.status(500).type('text').send('Error: database error on server')
   }
 })
@@ -137,7 +136,7 @@ app.get('/createworkout', async (req, res) => {
 async function createWorkout (equipmentIds, time, rounds) {
   const possibleMovements = await getPossibleMovements(equipmentIds)
   const numMovements = Math.floor(Math.random() * (MAX_MOVEMENTS - MIN_MOVEMENTS + 1) + MIN_MOVEMENTS)
-  const timePerMovement = time / (rounds * numMovements)
+  const timePerMovement = time * 60 / (rounds * numMovements)
   const movements = []
   for (let i = 0; i < numMovements; i++) {
     const index = Math.floor(Math.random() * possibleMovements.length)
@@ -166,10 +165,8 @@ function createMovement (movement, time) {
     reps = Math.floor(time / unit.rep_time)
   } else {
     let closestTime = Number.MAX_SAFE_INTEGER
-    console.log(closestTime)
     Object.keys(unit.rep_times).forEach(rep => {
       const newTime = Math.abs(time - unit.rep_times[rep])
-      console.log(newTime)
       if (newTime < closestTime) {
         reps = parseInt(rep)
         closestTime = newTime
@@ -179,7 +176,8 @@ function createMovement (movement, time) {
   return {
     name: movement.name,
     reps: reps,
-    unit: unit.name
+    unit: unit.name,
+    weight: unit.weight
   }
 }
 
