@@ -20,15 +20,18 @@
     "requires": "barbells",
     "units": [
       {
-        "name": "light",
+        "name": "rep",
+        "weight": "light",
         "rep_time": 4
       },
       {
-        "name": "medium",
+        "name": "rep",
+        "weight": "medium",
         "rep_time": 5
       },
       {
-        "name": "heavy",
+        "name": "rep",
+        "weight": "heavy",
         "rep_time": 6
       }
     ]
@@ -65,15 +68,18 @@
     "requires": "barbells",
     "units": [
       {
-        "name": "light",
+        "name": "rep",
+        "weight": "light",
         "rep_time": 2.5
       },
       {
-        "name": "medium",
+        "name": "rep",
+        "weight": "medium",
         "rep_time": 3.5
       },
       {
-        "name": "heavy",
+        "name": "rep",
+        "weight": "heavy",
         "rep_time": 4.5
       }
     ]
@@ -92,15 +98,18 @@
     "requires": "dumbbells",
     "units": [
       {
-        "name": "light",
+        "name": "rep",
+        "weight": "light",
         "rep_time": 2.5
       },
       {
-        "name": "medium",
+        "name": "rep",
+        "weight": "medium",
         "rep_time": 3.5
       },
       {
-        "name": "heavy",
+        "name": "rep",
+        "weight": "heavy",
         "rep_time": 4.5
       }
     ]
@@ -110,15 +119,18 @@
     "requires": "dumbbells",
     "units": [
       {
-        "name": "light",
+        "name": "rep",
+        "weight": "light",
         "rep_time": 2.5
       },
       {
-        "name": "medium",
+        "name": "rep",
+        "weight": "medium",
         "rep_time": 3.5
       },
       {
-        "name": "heavy",
+        "name": "rep",
+        "weight": "heavy",
         "rep_time": 4.5
       }
     ]
@@ -128,15 +140,18 @@
     "requires": "barbells",
     "units": [
       {
-        "name": "light",
+        "name": "rep",
+        "weight": "light",
         "rep_time": 3
       },
       {
-        "name": "medium",
+        "name": "rep",
+        "weight": "medium",
         "rep_time": 4
       },
       {
-        "name": "heavy",
+        "name": "rep",
+        "weight": "heavy",
         "rep_time": 5
       }
     ]
@@ -146,15 +161,18 @@
     "requires": "barbells",
     "units": [
       {
-        "name": "light",
+        "name": "rep",
+        "weight": "light",
         "rep_time": 3.5
       },
       {
-        "name": "medium",
+        "name": "rep",
+        "weight": "medium",
         "rep_time": 4.5
       },
       {
-        "name": "heavy",
+        "name": "rep",
+        "weight": "heavy",
         "rep_time": 5.5
       }
     ]
@@ -173,15 +191,18 @@
     "requires": "barbells",
     "units": [
       {
-        "name": "light",
+        "name": "rep",
+        "weight": "light",
         "rep_time": 4
       },
       {
-        "name": "medium",
+        "name": "rep",
+        "weight": "medium",
         "rep_time": 5
       },
       {
-        "name": "heavy",
+        "name": "rep",
+        "weight": "heavy",
         "rep_time": 6
       }
     ]
@@ -201,15 +222,18 @@
     "requires": "barbells",
     "units": [
       {
-        "name": "light",
+        "name": "rep",
+        "weight": "light",
         "rep_time": 3.5
       },
       {
-        "name": "medium",
+        "name": "rep",
+        "weight": "medium",
         "rep_time": 4.5
       },
       {
-        "name": "heavy",
+        "name": "rep",
+        "weight": "heavy",
         "rep_time": 5.5
       }
     ]
