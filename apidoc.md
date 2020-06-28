@@ -165,6 +165,8 @@ Error: database error on server
 ## Create a workout.
 **Request Format:** `/createworkout` endpoint with query parameters of...
 - `profile` (string) name of the profile to create the workout for
+- `time` (int) number of minutes the workout should last
+- `rounds` (int) number of rounds you want the workout to last
 
 **Request Type:** `GET`
 
@@ -172,12 +174,12 @@ Error: database error on server
 
 **Description:** Returns list of all the equipment on the server.
 - `type` (string) type of workout (AMRAP/Time)
-- `rounds` (int) number of rounds in the workout
-- `time` (optional) (int) if AMRAP workout how long the workout is
+- `time` (int) number of minutes for the workout
 - `movements` array of movements in the workout
   - `name` (string) name of the movement
   - `reps` (int) number of reps for the movement
-  - `weight` (optional) (string) if a non-body weight movement the level of weight for the movement
+  - `unit` (string) name of the unit i.e. 'rep', 'meters', 'calories', ...
+  - `weight` (string) (optional) if a non-body weight movement the level of weight for the movement
 
 **Example Request:** /createworkout
 
@@ -188,20 +190,20 @@ Error: database error on server
   "time": 15,
   "movements": [
     {
-      "name": "Run",
+      "name": "run",
       "reps": 400,
-      "scale": "Meters"
+      "unit": "meters"
     },
     {
-      "name": "Back Squat",
+      "name": "back squats",
       "reps": 10,
-      "scale": "reps",
+      "unit": "reps",
       "weight": "medium"
     },
     {
-      "name": "Wall Balls",
+      "name": "wall balls",
       "reps": 20,
-      "scale": "reps",
+      "unit": "reps",
       "weight": "medium"
     }
   ]
