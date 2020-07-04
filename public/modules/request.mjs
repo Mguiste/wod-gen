@@ -9,7 +9,8 @@ async function postCreateProfile (profile) {
 }
 
 async function getProfile (profile) {
-  const response = await window.fetch('getProfile?profile=' + profile)
+  const url = createGetUrl('getprofile', ['profile'], [profile])
+  const response = await window.fetch(url)
   checkStatus(response)
   return await response.json()
 }
@@ -29,4 +30,19 @@ async function postSelectEquipment (profile, equipment) {
   return await response.json()
 }
 
-export { postCreateProfile, getProfile, getAllEquipment, postSelectEquipment }
+async function getCreateWorkout (profile, time, rounds) {
+  const url = createGetUrl('createworkout', ['profile', 'time', 'rounds'], [profile, time, rounds])
+  const response = await window.fetch(url)
+  checkStatus(response)
+  return await response.json()
+}
+
+function createGetUrl (endpoint, queryNames, queryValues) {
+  let url = endpoint + '?'
+  for (let i = 0; i < queryNames.length; i++) {
+    url += queryNames[i] + '=' + queryValues[i] + '&'
+  }
+  return url.substr(0, url.length - 1)
+}
+
+export { postCreateProfile, getProfile, getAllEquipment, postSelectEquipment, getCreateWorkout }
