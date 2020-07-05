@@ -20,17 +20,17 @@
     "requires": "barbells",
     "units": [
       {
-        "name": "rep",
+        "name": "reps",
         "weight": "light",
         "rep_time": 4
       },
       {
-        "name": "rep",
+        "name": "reps",
         "weight": "medium",
         "rep_time": 5
       },
       {
-        "name": "rep",
+        "name": "reps",
         "weight": "heavy",
         "rep_time": 6
       }
@@ -40,7 +40,7 @@
     "name": "sit ups",
     "units": [
       {
-        "name": "rep",
+        "name": "reps",
         "rep_time": 2
       }
     ]
@@ -49,7 +49,7 @@
     "name": "air squats",
     "units": [
       {
-        "name": "rep",
+        "name": "reps",
         "rep_time": 1.5
       }
     ]
@@ -58,7 +58,7 @@
     "name": "push ups",
     "units": [
       {
-        "name": "rep",
+        "name": "reps",
         "rep_time": 2.75
       }
     ]
@@ -68,17 +68,17 @@
     "requires": "barbells",
     "units": [
       {
-        "name": "rep",
+        "name": "reps",
         "weight": "light",
         "rep_time": 2.5
       },
       {
-        "name": "rep",
+        "name": "reps",
         "weight": "medium",
         "rep_time": 3.5
       },
       {
-        "name": "rep",
+        "name": "reps",
         "weight": "heavy",
         "rep_time": 4.5
       }
@@ -88,7 +88,7 @@
     "name": "sit up strikes",
     "units": [
       {
-        "name": "rep",
+        "name": "reps",
         "rep_time": 2
       }
     ]
@@ -98,17 +98,17 @@
     "requires": "dumbbells",
     "units": [
       {
-        "name": "rep",
+        "name": "reps",
         "weight": "light",
         "rep_time": 2.5
       },
       {
-        "name": "rep",
+        "name": "reps",
         "weight": "medium",
         "rep_time": 3.5
       },
       {
-        "name": "rep",
+        "name": "reps",
         "weight": "heavy",
         "rep_time": 4.5
       }
@@ -119,17 +119,17 @@
     "requires": "dumbbells",
     "units": [
       {
-        "name": "rep",
+        "name": "reps",
         "weight": "light",
         "rep_time": 2.5
       },
       {
-        "name": "rep",
+        "name": "reps",
         "weight": "medium",
         "rep_time": 3.5
       },
       {
-        "name": "rep",
+        "name": "reps",
         "weight": "heavy",
         "rep_time": 4.5
       }
@@ -140,17 +140,17 @@
     "requires": "barbells",
     "units": [
       {
-        "name": "rep",
+        "name": "reps",
         "weight": "light",
         "rep_time": 3
       },
       {
-        "name": "rep",
+        "name": "reps",
         "weight": "medium",
         "rep_time": 4
       },
       {
-        "name": "rep",
+        "name": "reps",
         "weight": "heavy",
         "rep_time": 5
       }
@@ -161,47 +161,47 @@
     "requires": "barbells",
     "units": [
       {
-        "name": "rep",
+        "name": "reps",
         "weight": "light",
         "rep_time": 3.5
       },
       {
-        "name": "rep",
+        "name": "reps",
         "weight": "medium",
         "rep_time": 4.5
       },
       {
-        "name": "rep",
+        "name": "reps",
         "weight": "heavy",
         "rep_time": 5.5
       }
     ]
   },
   {
-    "name": "burbee",
+    "name": "burbees",
     "units": [
       {
-        "name": "rep",
+        "name": "reps",
         "rep_time": 4
       }
     ]
   },
   {
-    "name": "power clean",
+    "name": "power cleans",
     "requires": "barbells",
     "units": [
       {
-        "name": "rep",
+        "name": "reps",
         "weight": "light",
         "rep_time": 4
       },
       {
-        "name": "rep",
+        "name": "reps",
         "weight": "medium",
         "rep_time": 5
       },
       {
-        "name": "rep",
+        "name": "reps",
         "weight": "heavy",
         "rep_time": 6
       }
@@ -212,29 +212,49 @@
     "requires": "pull up bar",
     "units": [
       {
-        "name": "rep",
+        "name": "reps",
         "rep_time": 4.5
       }
     ]
   },
   {
-    "name": "hang clean",
+    "name": "hang cleans",
     "requires": "barbells",
     "units": [
       {
-        "name": "rep",
+        "name": "reps",
         "weight": "light",
         "rep_time": 3.5
       },
       {
-        "name": "rep",
+        "name": "reps",
         "weight": "medium",
         "rep_time": 4.5
       },
       {
-        "name": "rep",
+        "name": "reps",
         "weight": "heavy",
         "rep_time": 5.5
+      }
+    ]
+  },
+  {
+    "name": "bike",
+    "requires": "bike",
+    "units": [
+      {
+        "name": "miles",
+        "rep_times":
+        {
+          "1": 240,
+          "2": 500,
+          "3": 770,
+          "4": 1100
+        }
+      },
+      {
+        "name": "calories",
+        "rep_time": 2
       }
     ]
   }
