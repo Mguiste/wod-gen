@@ -85,10 +85,14 @@ import { getAllEquipment, getProfile, postSelectEquipment, getCreateWorkout } fr
     window.location.replace('/')
   }
 
-  async function createWorkoutClick () {
+  async function createWorkoutClick (event) {
+    event.preventDefault()
+    const formData = new window.FormData(id('workout-form'))
     const profile = window.sessionStorage.getItem('profile')
+    const time = formData.get('time')
+    const rounds = formData.get('rounds')
     try {
-      const workout = await getCreateWorkout(profile, 15, 5)
+      const workout = await getCreateWorkout(profile, time, rounds)
       displayWorkout(workout)
     } catch (error) {
       console.log(error)
