@@ -14,6 +14,10 @@ main {
   margin: 2vw;
 }
 
+#workout-form > * {
+  font-size: large;
+}
+
 /* ---------- EQUIPMENT ---------- */
 #equipment {
   display: flex;
