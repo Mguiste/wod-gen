@@ -5,8 +5,8 @@
  * The frontend JavaScript file for the main wod gens page after logging in.
  */
 'use strict'
-import { id, gen, showMessage } from './modules/helper.mjs'
-import { getAllEquipment, getProfile, postSelectEquipment } from './modules/request.mjs'
+import { id, gen, showMessage, show } from './modules/helper.mjs'
+import { getAllEquipment, getProfile, postSelectEquipment, getCreateWorkout } from './modules/request.mjs'
 ;(function () {
   window.addEventListener('load', init)
 
@@ -23,6 +23,7 @@ import { getAllEquipment, getProfile, postSelectEquipment } from './modules/requ
     id('profile').textContent = window.sessionStorage.getItem('name')
     id('log-out').addEventListener('click', logOutClick)
     id('profile').textContent = window.sessionStorage.getItem('profile')
+    id('create-workout').addEventListener('click', createWorkoutClick)
     initializeEquipment()
   }
 
@@ -54,10 +55,44 @@ import { getAllEquipment, getProfile, postSelectEquipment } from './modules/requ
     return div
   }
 
+  function displayWorkout (workout) {
+    id('workout-type').textContent = workout.type
+
+    const movementsHtml = id('movements')
+    movementsHtml.innerHTML = ''
+    workout.movements.forEach(movement => {
+      const containerHtml = gen('div')
+      const movementHtml = gen('code')
+      const scaleHtml = gen('code')
+
+      movementHtml.textContent = movement.name
+      scaleHtml.textContent = movement.reps + ' ' + movement.unit
+      if (movement.weight) {
+        scaleHtml.textContent += ' (' + movement.weight + ')'
+      }
+
+      containerHtml.appendChild(movementHtml)
+      containerHtml.appendChild(scaleHtml)
+      movementsHtml.appendChild(containerHtml)
+    })
+
+    show(id('workout'))
+  }
+
   // -------------------- EVENT HANDLER FUNCTIONS -------------------- //
   function logOutClick () {
     window.sessionStorage.removeItem('profile')
     window.location.replace('/')
+  }
+
+  async function createWorkoutClick () {
+    const profile = window.sessionStorage.getItem('profile')
+    try {
+      const workout = await getCreateWorkout(profile, 15, 5)
+      displayWorkout(workout)
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   async function equipmentClick (event) {
