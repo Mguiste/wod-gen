@@ -21,12 +21,18 @@
     <main>
       <!-- Section to generate workout -->
       <section>
-        <h2>Generate Workout</h2>
+        <h2>Workout</h2>
+        <form id="workout-form">
+          <label for="time">Time (min): </label>
+          <input id="time" name="time" type="number" min="0" required>
+          <label for="rounds">Rounds: </label>
+          <input id="rounds" name="rounds" type="number" min="0" required>
+          <button id="create-workout" type="submit">Create Workout</button>
+        </form>
         <div id="workout" class="hidden">
           <h2 id="workout-type"></h2>
           <div id="movements"></div>
         </div>
-        <button id="create-workout">Create Workout</button>
       </section>
       <hr>
       <!-- Section to select equipment -->
