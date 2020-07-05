@@ -10,6 +10,11 @@ header {
   justify-content: space-around;
 }
 
+main {
+  margin: 2vw;
+}
+
+/* ---------- EQUIPMENT ---------- */
 #equipment {
   display: flex;
   justify-content: space-around;
@@ -29,6 +34,36 @@ header {
   text-align: center;
 }
 
-.selected {
+#equipment .selected {
   background-color: greenyellow;
+}
+
+/* ---------- WORKOUT ---------- */
+#workout {
+  padding: 10px;
+  background-color: lightgray;
+}
+
+#workout > h3 {
+  margin: 0;
+}
+
+#workout > p {
+  font-size: large;
+}
+
+#movements {
+  display: flex;
+  flex-direction: column;
+}
+
+#movements > div {
+  display: flex;
+  justify-content: space-between;
+}
+
+#movements > div > code {
+  margin: 0;
+  flex-grow: 0;
+  font-size: x-large;
 }
